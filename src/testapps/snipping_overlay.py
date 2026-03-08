@@ -6,6 +6,9 @@ import mss
 import numpy as np
 from PIL import Image
 
+from snipping_popup import SnipPopup
+
+
 
 class SnippingOverlay(QWidget):
     def __init__(self):
@@ -49,6 +52,12 @@ class SnippingOverlay(QWidget):
             rect = QRect(self.start, self.end).normalized()
 
             self.capture(rect)
+
+            self.hide()   # IMPORTANT: remove fullscreen overlay
+
+            # Launch Snipping Popup to save the captured object
+            popup = SnipPopup(self.screenshot, rect)
+            popup.exec()
 
             # Close the overlay and not stop the Application
             #self.close()

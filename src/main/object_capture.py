@@ -10,7 +10,7 @@ from PySide6.QtWidgets import (
 )
 
 from PySide6.QtCore import Qt, QRect
-from PySide6.QtGui import QPainter, QPen, QPixmap
+from PySide6.QtGui import QColor, QPainter, QPen, QPixmap
 
 
 RESULT_DIR = "results"
@@ -51,7 +51,8 @@ class SnippingOverlay(QWidget):
             Qt.Tool
         )
         self.setAttribute(Qt.WA_TranslucentBackground)
-        self.setWindowOpacity(0.35)
+        #self.setWindowOpacity(0.35)
+        self.setWindowState(Qt.WindowFullScreen)
         self.setCursor(Qt.CrossCursor)
 
         self.start = None
@@ -78,10 +79,14 @@ class SnippingOverlay(QWidget):
             return
 
         painter = QPainter(self)
+        # dim screen
+        painter.fillRect(self.rect(), QColor(0, 0, 0, 120))   
+        
         painter.setPen(QPen(Qt.red, 2))
 
         rect = QRect(self.start, self.end).normalized()
-        painter.drawRect(rect)
+        #painter.drawRect(rect)
+        painter.drawRect(rect.adjusted(0,0,-1,-1))
 
     # -------------------
     # Capture Screenshot
