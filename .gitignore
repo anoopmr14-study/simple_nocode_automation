@@ -5,3 +5,5 @@ __pycache__/
 .smartvenv2/
 samples/
 screenshots/
+*.png
+*.jpg
