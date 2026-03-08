@@ -14,6 +14,8 @@ import cv2
 import numpy as np
 from pynput import keyboard
 
+from src.testapps import SnippingOverlayWindow
+
 
 # -------------------------
 # Import and configure pytesseract
@@ -123,14 +125,17 @@ class SimpleAutomation(QWidget):
     # Insert Screenshot Object Button
     # -------------------------
     def insert_object(self):
-        from object_capture import ObjectCapture
+        #from object_capture import ObjectCapture
 
         self.hide()
 
         # Keep reference so Qt doesn't destroy the window
-        self.capture_tool = ObjectCapture(self)
+        #self.capture_tool = ObjectCapture(self)
 
-        self.capture_tool.start_capture()
+        #self.capture_tool.start_capture()
+
+        self.snipping_tool = SnippingOverlayWindow()
+        self.snipping_tool.show()
 
 
     # -------------------------
@@ -296,8 +301,8 @@ class SimpleAutomation(QWidget):
         print(f"Text '{target}' not found")
 
 
-if __name__ == "__main__":
-    app = QApplication(sys.argv)
-    window = SimpleAutomation()
-    window.show()
-    sys.exit(app.exec())
+# if __name__ == "__main__":
+#     app = QApplication(sys.argv)
+#     window = SimpleAutomation()
+#     window.show()
+#     sys.exit(app.exec())

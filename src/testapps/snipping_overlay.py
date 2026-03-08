@@ -6,11 +6,11 @@ import mss
 import numpy as np
 from PIL import Image
 
-from snipping_popup import SnipPopup
+from .snipping_popup import SnipPopup
 
 
 
-class SnippingOverlay(QWidget):
+class SnippingOverlayWindow(QWidget):
     def __init__(self):
         super().__init__()
 
