@@ -80,18 +80,28 @@ class SimpleAutomation(QWidget):
         self.setWindowTitle("Simple OCR Automation")
         self.setGeometry(200, 200, 500, 400)
 
+        # Layout
         layout = QVBoxLayout()
 
+        # Command Text Editor
         self.editor = QTextEdit()
         self.editor.setPlaceholderText("Type commands like:\nClick on File\nType Hello\nClick on Save")
         layout.addWidget(self.editor)
 
+        # Create Insert Screenshot Object button
+        self.insert_btn = QPushButton("Insert Screenshot Object")
+        self.insert_btn.clicked.connect(self.insert_object)
+        layout.addWidget(self.insert_btn)
+
+        # Create Play Button
         self.play_btn = QPushButton("Play")
         self.play_btn.clicked.connect(self.start_execution)
         layout.addWidget(self.play_btn)
 
+        # Set the layout
         self.setLayout(layout)
 
+        # Listen the hotkey in the background
         self.start_hotkey_listener()
 
     # -------------------------
@@ -107,6 +117,20 @@ class SimpleAutomation(QWidget):
             '<ctrl>+<alt>+s': on_activate
         })
         self.listener.start()
+
+    # -------------------------
+    # Insert Screenshot Object Button
+    # -------------------------
+    def insert_object(self):
+        from object_capture import ObjectCapture
+
+        self.hide()
+
+        # Keep reference so Qt doesn't destroy the window
+        self.capture_tool = ObjectCapture(self)
+
+        self.capture_tool.start_capture()
+
 
     # -------------------------
     # Play Button

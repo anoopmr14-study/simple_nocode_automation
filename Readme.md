@@ -17,7 +17,7 @@ How to Run
 Requirements and Status
 =======================
 1. User will be able to  add commands in Text box.
-2. Upon click on Play button, system should 
+2. Upon click on "Play" button, system should 
     - identify the controls with name and perform operations
         - Click on  --> Click on the Item with name
         - Type      --> Text
@@ -27,9 +27,15 @@ Requirements and Status
         - Mouse Right Click     --> Mouse right click
         - Mouse Left Clcik      --> Mouse left click
         - Mouse Double Click    --> MOuse double click
-3. Upon Click on Insert Command
-3. Upon click on Record button, system should
-    - Hide the Automation Tool all UI
+3. Upon Click on "Insert Screenshot Object" button
+    - Hide the Automation Tool UI (all UIs)
+    - Show a Transparent overlay UI with Recntagle Snipping Area which user can resize and Press Enter Key
+    - Close the Overlay and Popup UI with Screenshot of the snipped Area, Co-ordinates and name text box. user can type the name of the object and press save 
+    - These details will be stored in file system (image under result/objects and result/objectmapping.json having imagepath, co-oridnates and name)
+
+
+3. Upon click on "Record" button, system should
+    - Hide the Automation Tool UI (all UIs)
     - Record the Mouse and Key board operations (eventhough UI hide) Commands with required parameters and store as temp file
     - On Specific HotKey Combination Ctrl+Atl+V --> It should show overlay and allow to select the Rectangle and take the screenshot and store the co-ordinate as validation command
     - On Ctrl+ Alt+ S --> Stop the Recording and show the UI with option to save the file and Replay Command UI should fill with these command and allow to play.
