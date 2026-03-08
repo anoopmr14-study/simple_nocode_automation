@@ -1,14 +1,17 @@
+Simple Automation Tool which will allow user to type and execute the workflow or record and reply the workflow
+
+
 How to Run
 ============
-.\.smartvenv2\Scripts\activate
-python .\auto_ui.py
-
-type the commands
+1. Run .\.smartvenv2\Scripts\activate
+2. Run python .\auto_ui.py
+3. Type the commands in UI
     e.g. 
         Click on File
         Click on Open
         type .gitignore
-        Click on Open  (Confused Two Open)
+        Click on Open  (Current version confused if multiple Open text in UI and select the first Open)
+4. Press Play
 
 
 Requirements and Status
@@ -18,19 +21,28 @@ Requirements and Status
     - identify the controls with name and perform operations
         - Click on  --> Click on the Item with name
         - Type      --> Text
-        - Hotkey    --> hotkey combination
+        - Hotkey    --> hotkey combination simulation like Ctrl + X
     - Mouse operation simulation for commands like 
         - Mouse Move X,Y        --> move the mouse to specified location
         - Mouse Right Click     --> Mouse right click
         - Mouse Left Clcik      --> Mouse left click
-        - Mouse Double Click    --> 
+        - Mouse Double Click    --> MOuse double click
+3. Upon Click on Insert Command
+3. Upon click on Record button, system should
+    - Hide the Automation Tool all UI
+    - Record the Mouse and Key board operations (eventhough UI hide) Commands with required parameters and store as temp file
+    - On Specific HotKey Combination Ctrl+Atl+V --> It should show overlay and allow to select the Rectangle and take the screenshot and store the co-ordinate as validation command
+    - On Ctrl+ Alt+ S --> Stop the Recording and show the UI with option to save the file and Replay Command UI should fill with these command and allow to play.
 
-3. Upon 
-2. 
 
-Simplified UI Automation application
-1. It should record and replay and store the mouse and keyboard actions in 
-
+Possible Limitations
+======================
+1. OCR accuracy depends on screen clarity
+2. Works best with clear UI text
+3. Not good for icons                                   - Need Solution
+4. Multi-monitor may need adjustment                    - Need Solution
+5. Same Text in UI confusion scneario                   - Need Solution
+6. Multiple word text treated as seperate Scenario      - Need Solution
 
 
 Advantages of this application
@@ -51,9 +63,3 @@ Add confidence threshold slider
 Add command validation
 Package using PyInstaller
 
-Possible Limitations
-======================
-OCR accuracy depends on screen clarity
-Works best with clear UI text
-Not good for icons
-Multi-monitor may need adjustment

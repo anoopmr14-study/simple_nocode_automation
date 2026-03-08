@@ -134,18 +134,77 @@ class SimpleAutomation(QWidget):
                 break
 
             command = command.strip()
+            cmd = command.lower()
 
-            if command.lower().startswith("click on"):
+            # -----------------
+            # CLICK ON TEXT
+            # -----------------
+            if cmd.startswith("click on"):
                 text = command[8:].strip()
                 self.click_text(text)
 
-            elif command.lower().startswith("type"):
+            # -----------------
+            # TYPE TEXT
+            # -----------------
+            elif cmd.startswith("type"):
                 text = command[4:].strip()
                 pyautogui.write(text, interval=0.05)
 
-            time.sleep(1)
+            # -----------------
+            # HOTKEY
+            # Example: Hotkey Ctrl+X
+            # -----------------
+            elif cmd.startswith("hotkey"):
+                combo = command[6:].strip()
+                self.execute_hotkey(combo)
+
+            # -----------------
+            # MOUSE MOVE
+            # Example: Mouse Move 500,300
+            # -----------------
+            elif cmd.startswith("mouse move"):
+                coords = command[10:].strip()
+                try:
+                    x, y = coords.split(",")
+                    pyautogui.moveTo(int(x), int(y), duration=0.2)
+                except:
+                    print("Invalid Mouse Move format")
+
+            # -----------------
+            # MOUSE LEFT CLICK
+            # -----------------
+            elif cmd.startswith("mouse left click"):
+                pyautogui.click()
+
+            # -----------------
+            # MOUSE RIGHT CLICK
+            # -----------------
+            elif cmd.startswith("mouse right click"):
+                pyautogui.rightClick()
+
+            # -----------------
+            # MOUSE DOUBLE CLICK
+            # -----------------
+            elif cmd.startswith("mouse double click"):
+                pyautogui.doubleClick()
+
+            else:
+                print(f"Unknown command: {command}")
+
+            time.sleep(0.5)
 
         print("Execution finished")
+
+    # -------------------------
+    # Execute Hotkey
+    # -------------------------
+    def execute_hotkey(self, combo):
+
+        try:
+            keys = combo.replace(" ", "").lower().split("+")
+            pyautogui.hotkey(*keys)
+        except Exception as e:
+            print(f"Hotkey error: {e}")
 
     # -------------------------
     # Screenshot + OCR
