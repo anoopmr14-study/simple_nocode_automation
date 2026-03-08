@@ -1,0 +1,93 @@
+
+======================================================================================================================================================================================
+Feb 23 2026  - Release Version 1
+======================================================================================================================================================================================
+
+
+=================================
+Test-1
+=================================
+
+python .\auto_ui.py
+Running outside PyInstaller bundle C:\Anoop\simple_nocode_automation
+C:\Anoop\simple_nocode_automation\tesseract\tessdata
+qt.qpa.window: SetProcessDpiAwarenessContext() failed: The operation completed successfully.
+Qt's default DPI awareness context is DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE_V2. If you know what you are doing, you can overwrite this default using qt.conf (https://
+
+
+
+
+
+
+
+
+                                                                                                                                                                       /doc.qt.io/qt-6/highdpi.html#configuring-windows).
+    level  page_num  block_num  par_num  line_num  word_num  left   top  width  height       conf    text
+0       1         1          0        0         0         0     0     0   1920    1080  -1.000000     NaN
+1       2         1          1        0         0         0     3     4   1891      46  -1.000000     NaN
+2       3         1          1        1         0         0     3     4   1891      46  -1.000000     NaN
+3       4         1          1        1         1         0     3     4   1891      20  -1.000000     NaN
+4       5         1          1        1         1         1     3     4     19      20  49.511505     [ef
+..    ...       ...        ...      ...       ...       ...   ...   ...    ...     ...        ...     ...
+89      5         1         11        1         1         2   119  1044     50      13  96.849434  Search
+90      2         1         12        0         0         0     0  1016   1920      64  -1.000000     NaN
+91      3         1         12        1         0         0     0  1016   1920      64  -1.000000     NaN
+92      4         1         12        1         1         0     0  1016   1920      64  -1.000000     NaN
+93      5         1         12        1         1         1     0  1016   1920      64  95.000000
+
+[94 rows x 12 columns]
+Exception in thread Thread-2 (execute_commands):
+Traceback (most recent call last):
+  File "C:\Python310\lib\threading.py", line 1009, in _bootstrap_inner
+    self.run()
+  File "C:\Python310\lib\threading.py", line 946, in run
+    self._target(*self._args, **self._kwargs)
+  File "C:\Anoop\simple_nocode_automation\auto_ui.py", line 140, in execute_commands
+    self.click_text(text)
+  File "C:\Anoop\simple_nocode_automation\auto_ui.py", line 201, in click_text
+    positions = self.get_screen_text_positions()
+  File "C:\Anoop\simple_nocode_automation\auto_ui.py", line 186, in get_screen_text_positions
+    if int(data['conf'][i]) > 60:
+NameError: name 'i' is not defined. Did you mean: 'id'?
+
+=================================
+Test-2
+=================================
+(.smartvenv2) PS C:\Anoop\simple_nocode_automation> python .\auto_ui.py
+Running outside PyInstaller bundle C:\Anoop\simple_nocode_automation
+C:\Anoop\simple_nocode_automation\tesseract\tessdata
+qt.qpa.window: SetProcessDpiAwarenessContext() failed: The operation completed successfully.
+Qt's default DPI awareness context is DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE_V2. If you know what you are doing, you can overwrite this default using qt.conf (https://doc.qt.io/qt-6/highdpi.html#configuring-windows).
+    level  page_num  block_num  par_num  line_num  word_num  left   top  width  height       conf    text
+0       1         1          0        0         0         0     0     0   1920    1080  -1.000000     NaN
+1       2         1          1        0         0         0     3     4   1891      46  -1.000000     NaN
+2       3         1          1        1         0         0     3     4   1891      46  -1.000000     NaN
+3       4         1          1        1         1         0     3     4   1891      20  -1.000000     NaN
+4       5         1          1        1         1         1     3     4     19      20  49.511505     [ef
+..    ...       ...        ...      ...       ...       ...   ...   ...    ...     ...        ...     ...
+89      5         1         11        1         1         2   119  1044     50      13  96.849434  Search
+90      2         1         12        0         0         0     0  1016   1920      64  -1.000000     NaN
+91      3         1         12        1         0         0     0  1016   1920      64  -1.000000     NaN
+92      4         1         12        1         1         0     0  1016   1920      64  -1.000000     NaN
+93      5         1         12        1         1         1     0  1016   1920      64  95.000000
+
+[94 rows x 12 columns]
+[('*new', 30, 9, 42, 11), ('1', 67, 0, 8, 28), ('-', 80, 15, 4, 1), ('Notepad++', 90, 9, 76, 14), ('=', 1765, 13, 12, 1), ('a', 1823, 8, 12, 12), ('x', 1882, 8, 12, 12), ('File', 9, 36, 23, 13), ('Edit', 50, 36, 26, 13), ('Search', 94, 36, 44, 13), ('View', 156, 36, 32, 13), ('Encoding', 207, 36, 60, 14), ('Language', 286, 36, 65, 14), ('Settings', 369, 36, 53, 14), ('Tools', 440, 36, 35, 13), ('Macro', 493, 36, 42, 13), ('Run', 553, 36, 25, 13), ('Plugins', 596, 36, 47, 14), ('Window', 661, 36, 55, 13), ('new1', 30, 94, 85, 14), ('Normal', 3, 993, 44, 28), ('text', 56, 993, 24, 28), ('file', 85, 1001, 21, 11), ('length:', 979, 1001, 56, 14), ('1', 1091, 993, 6, 28), ('Pos:1', 1353, 1001, 34, 11), ('Windows', 1574, 993, 63, 28), ('(CRLF)', 1644, 993, 44, 28), ('INS', 1867, 1001, 22, 11), ('Q', 83, 1036, 13, 31), ('Search', 119, 1044, 50, 13)]
+     level  page_num  block_num  par_num  line_num  word_num  left   top  width  height       conf        text
+0        1         1          0        0         0         0     0     0   1920    1080  -1.000000         NaN
+1        2         1          1        0         0         0     3     4   1908      79  -1.000000         NaN
+2        3         1          1        1         0         0     3     4   1908      74  -1.000000         NaN
+3        4         1          1        1         1         0     3     4   1891      20  -1.000000         NaN
+4        5         1          1        1         1         1     3     4     19      20  49.511505         [ef
+..     ...       ...        ...      ...       ...       ...   ...   ...    ...     ...        ...         ...
+207      5         1         15        1         1         7  1819  1054     76      11  89.563095  23-02-2026
+208      2         1         16        0         0         0     0  1016   1920      64  -1.000000         NaN
+209      3         1         16        1         0         0     0  1016   1920      64  -1.000000         NaN
+210      4         1         16        1         1         0     0  1016   1920      64  -1.000000         NaN
+211      5         1         16        1         1         1     0  1016   1920      64  95.000000
+
+[212 rows x 12 columns]
+[('*new', 30, 9, 42, 11), ('1', 67, 0, 8, 28), ('-', 80, 15, 4, 1), ('Notepad++', 90, 9, 76, 14), ('a', 1823, 8, 12, 12), ('x', 1882, 8, 12, 12), ('File', 9, 36, 23, 13), ('Edit', 50, 36, 26, 13), ('Search', 94, 36, 44, 13), ('View', 156, 36, 32, 13), ('Encoding', 207, 36, 60, 14), ('Language', 286, 36, 65, 14), ('Settings', 370, 36, 52, 14), ('Tools', 440, 36, 35, 13), ('Macro', 493, 36, 42, 13), ('Run', 553, 36, 25, 13), ('Plugins', 596, 36, 47, 13), ('Window', 661, 36, 55, 13), ('2', 735, 36, 6, 8), ('Undo', 87, 54, 35, 29), ('|', 816, 56, 1, 22), ('Cut', 86, 127, 22, 11), ('Copy', 82, 149, 38, 28), ('Ctrl+C', 488, 153, 42, 11), ('Paste', 83, 169, 37, 31), ('Select', 86, 231, 40, 11), ('All', 130, 231, 17, 11), ('Begin/End', 87, 257, 67, 14), ('Select', 159, 257, 40, 11), ('Ctrl+Shift+B', 448, 257, 82, 11), ('Begin/End', 87, 283, 67, 14), ('Select', 159, 283, 40, 11), ('in', 204, 286, 11, 8), ('Column', 219, 283, 51, 11), ('Mode', 275, 283, 38, 11), ('Alt+Shift+B', 452, 283, 78, 11), ('Insert', 87, 320, 35, 11), ('Copy', 86, 346, 34, 14), ('to', 124, 347, 14, 10), ('Clipboard', 142, 346, 65, 14), ('Indent', 87, 372, 41, 11), ('Convert', 86, 398, 51, 11), ('Case', 141, 398, 31, 11), ('to', 176, 399, 14, 10), ('Line', 87, 424, 26, 11), ('Operations', 117, 424, 73, 14), ('Auto-Completion', 86, 476, 116, 14), ('EOL', 87, 502, 25, 11), ('Conversion', 116, 502, 73, 11), ('Blank', 87, 528, 36, 11), ('Operations', 126, 528, 73, 14), ('Paste', 87, 554, 33, 11), ('Special', 124, 554, 47, 14), ('On', 86, 580, 19, 11), ('Selection', 109, 580, 61, 11), ('Multi-select', 87, 617, 77, 11), ('All', 168, 617, 17, 11), ('Multi-select', 87, 643, 77, 11), ('Next', 169, 643, 30, 11), ('>', 537, 643, 5, 10), ('Undo', 87, 669, 35, 11), ('the', 126, 669, 21, 11), ('Latest', 152, 669, 38, 11), ('Added', 194, 669, 44, 11), ('Multi-Select', 244, 669, 79, 11), ('Skip', 86, 695, 28, 14), ('Current', 118, 695, 48, 11), ('&', 170, 695, 12, 11), ('Go', 186, 695, 19, 11), ('to', 209, 696, 14, 10), ('Next', 228, 695, 30, 11), ('Multi-select', 263, 695, 77, 11), ('Column', 86, 732, 51, 11), ('Mode...', 142, 732, 47, 11), ('Column', 86, 758, 51, 11), ('Editor...', 142, 758, 48, 11), ('Altec', 492, 758, 38, 11), ('Character', 86, 784, 63, 11), ('Panel', 154, 784, 33, 11), ('Clipboard', 86, 810, 65, 14), ('History', 157, 810, 46, 14), ('Read-Only', 87, 847, 69, 14), ('in', 161, 850, 11, 8), ('Notepad++', 177, 847, 77, 14), ('>', 537, 847, 5, 10), ('Normal', 3, 993, 44, 28), ('text', 56, 993, 24, 28), ('file', 85, 1001, 21, 11), ('length:', 979, 1001, 56, 14), ('1', 1091, 993, 6, 28), ('Pos:1', 1353, 1001, 34, 11), ('Windows', 1574, 993, 63, 28), ('(CRLF)', 1644, 993, 44, 28), ('INS', 1867, 1001, 22, 11), ('26°C', 1463, 1034, 30, 11), ('02:57', 1860, 1034, 35, 11), ('a', 1626, 1046, 14, 7), ('Q', 87, 1041, 18, 18), ('Search', 119, 1044, 50, 13), ('Light', 1463, 1054, 32, 14), ('rain', 1501, 1053, 23, 12), ('23-02-2026', 1819, 1054, 76, 11)]
+Text '"Select All"' not found
+Execution finished
+======================================================================================================================================================================================
