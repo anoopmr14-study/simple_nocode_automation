@@ -7,6 +7,8 @@ Reads recorded automation file and executes actions.
 import time
 import pyautogui
 from pynput import keyboard
+from src.player.smart_click import SmartClickExecutor
+
 
 pyautogui.FAILSAFE = True
 
@@ -17,6 +19,7 @@ class ActionPlayer:
         self.speed = 1.0   # 1 = normal, 2 = 2x faster, 0.5 = slower
         self.running = False
         self.stop_listener = None
+        self.smart_click = SmartClickExecutor()
 
     def start_stop_listener(self):
         """Start hotkey listener to stop automation"""
@@ -60,6 +63,15 @@ class ActionPlayer:
     # Execute Action
     # -------------------------------------------------
     def execute_action(self, action):
+
+        # -----------------------------
+        # Click Object with SmartClickExecutor (with retry and timeout)
+        # -----------------------------
+        if action.startswith("Click Object"):
+            object_name = action.replace("Click Object ", "")
+
+            # Using SmartClickExecutor for object clicks
+            self.smart_click.click_object(object_name, None, None, 200, 0.75)
 
         # -----------------------------
         # Wait

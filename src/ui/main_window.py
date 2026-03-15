@@ -150,7 +150,7 @@ class MainWindow(QMainWindow):
     # -------------------------------------------------
     def insert_object_step(self, object_name):
 
-        step = f"Click {object_name}"
+        step = f"Click Object {object_name}"
 
         self.step_list.addItem(step)
 
