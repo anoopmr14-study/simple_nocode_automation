@@ -116,4 +116,4 @@ if __name__ == "__main__":
     player = ActionPlayer()
 
     # change to your recorded file
-    player.play_file("recording_test.txt")
+    player.play_file("recording.txt")
