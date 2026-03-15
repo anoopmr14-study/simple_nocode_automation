@@ -31,7 +31,9 @@ Requirements
         - Mouse Right Click     --> Mouse right click
         - Mouse Left Clcik      --> Mouse left click
         - Mouse Double Click    --> MOuse double click
-    - Stop Automation Hotkey (Ctrl + Alt + Q)
+    - Stop Automation Hotkey (Ctrl + Alt + Q)                           --> [Status: Done]
+    - Playback Speed Control                                            --> [Status: Done]
+    - Screen Resolution Scaling
 
 3. Upon Click on "Insert Screenshot Object" button                      --> [Status: Done]
     - Hide the Automation Tool UI (all UIs)

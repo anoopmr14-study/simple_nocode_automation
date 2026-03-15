@@ -6,6 +6,7 @@ Reads recorded automation file and executes actions.
 
 import time
 import pyautogui
+from pynput import keyboard
 
 pyautogui.FAILSAFE = True
 
@@ -13,27 +14,46 @@ pyautogui.FAILSAFE = True
 class ActionPlayer:
 
     def __init__(self):
-        pass
+        self.speed = 1.0   # 1 = normal, 2 = 2x faster, 0.5 = slower
+        self.running = False
+        self.stop_listener = None
+
+    def start_stop_listener(self):
+        """Start hotkey listener to stop automation"""
+        self.stop_listener = keyboard.GlobalHotKeys({
+            '<ctrl>+<alt>+q': self.stop_execution
+        })
+
+        self.stop_listener.start()
+
+    def stop_execution(self):
+        print("Automation Stopped by User")
+        self.running = False
 
     # -------------------------------------------------
     # Play File
     # -------------------------------------------------
     def play_file(self, filepath):
-
         print(f"Playing automation file: {filepath}")
 
+        # Set running flag and start hotkey listener
+        self.running = True
+        self.start_stop_listener()
+
+        # Read actions from file
         with open(filepath, "r") as file:
             actions = file.readlines()
 
+        # Execute actions sequentially
         for action in actions:
+            if not self.running:
+                break
 
             action = action.strip()
-
             if not action:
                 continue
 
             print("Executing:", action)
-
             self.execute_action(action)
 
     # -------------------------------------------------
@@ -47,7 +67,8 @@ class ActionPlayer:
         if action.startswith("Wait"):
 
             delay = float(action.split(" ")[1])
-            time.sleep(delay)
+            #time.sleep(delay)
+            time.sleep(delay / self.speed)
 
         # -----------------------------
         # Mouse Move
