@@ -55,8 +55,8 @@ class SnippingOverlayWindow(QWidget):
 
             self.capture(rect)
 
-            # Emit signal to main window
-            self.snip_completed.emit(self.screenshot, rect)
+            # # Emit signal to main window
+            # self.snip_completed.emit(self.screenshot, rect)
 
             #self.hide()   # IMPORTANT: remove fullscreen overlay
 
@@ -67,6 +67,9 @@ class SnippingOverlayWindow(QWidget):
             # Close the overlay and not stop the Application
             self.close()
 
+            # Emit signal to main window
+            self.snip_completed.emit(self.screenshot, rect)
+            
             # Close the overlay and stop the Application
             #QApplication.quit()
 

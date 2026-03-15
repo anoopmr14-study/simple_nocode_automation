@@ -45,11 +45,13 @@ class MainWindow(QMainWindow):
         button_layout = QHBoxLayout()
 
         self.record_btn = QPushButton("Record")
+        self.insert_obj_btn = QPushButton("Insert Object")
         self.play_btn = QPushButton("Play")
         self.load_btn = QPushButton("Load")
         self.save_btn = QPushButton("Save")
 
         button_layout.addWidget(self.record_btn)
+        button_layout.addWidget(self.insert_obj_btn)
         button_layout.addWidget(self.play_btn)
         button_layout.addWidget(self.load_btn)
         button_layout.addWidget(self.save_btn)
@@ -70,6 +72,7 @@ class MainWindow(QMainWindow):
         # Connect Events
         # -----------------------------
         self.record_btn.clicked.connect(self.start_recording)
+        self.insert_obj_btn.clicked.connect(self.capture_object)
         self.play_btn.clicked.connect(self.play_workflow)
         self.load_btn.clicked.connect(self.load_file)
         self.save_btn.clicked.connect(self.save_file)
@@ -126,8 +129,10 @@ class MainWindow(QMainWindow):
     # -------------------------------------------------
     def on_snip_complete(self, screenshot, rect):
 
-        # show UI again
+        # show Main UI again
         self.show()
+        self.raise_()
+        self.activateWindow()
 
         popup = SnipPopup(screenshot, rect)
 
@@ -147,7 +152,7 @@ class MainWindow(QMainWindow):
 
         step = f"Click {object_name}"
 
-        self.workflow_list.addItem(step)
+        self.step_list.addItem(step)
 
     # -------------------------------------------------
     # Play Automation   - runs in separate thread to avoid blocking UI
