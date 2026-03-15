@@ -57,6 +57,9 @@ Requirements
     Delete Step
     Move Step Up
     Move Step Down
+
+
+
 Issue seen
 =============
 1. Snipping Area and screenshot taken has small difference 
@@ -89,4 +92,327 @@ Add "Wait until visible"
 Add confidence threshold slider
 Add command validation
 Package using PyInstaller
+Image based clicking with auto retry
+smart UI detection
+resolution independence
 
+
+=========================================================================================================
+Project Context - v1.2
+=========================================================================================================
+Below is a **clean, compact context summary** you can paste into a **new chat** so we can continue improvements without losing context or wasting tokens.
+
+I optimized it to **keep all technical state** but **minimize tokens**.
+
+---
+
+# Project Context Summary (Continue Development)
+
+### Project
+
+Python **No-Code Desktop UI Automation Tool**
+
+Goal:
+Allow **non-technical users** to **record, edit, and play automation workflows** similar to simple RPA tools.
+
+Tech Stack:
+
+* Python
+* PySide6 (UI)
+* pynput (record mouse/keyboard)
+* pyautogui (playback automation)
+
+---
+
+# Current Application Architecture
+
+```
+automation_tool
+│
+├── recorder
+│   └── action_recorder.py
+│
+├── player
+│   └── action_player.py
+│
+├── ui
+│   └── main_window.py
+│
+└── main.py
+```
+
+---
+
+# Recorder Features Implemented
+
+`ActionRecorder`
+
+Captures:
+
+Mouse
+
+```
+Mouse Move X,Y
+Mouse Left Click
+Mouse Right Click
+Mouse Double Click
+```
+
+Keyboard
+
+```
+Type text H
+Hotkey Ctrl + C
+Hotkey Ctrl + Shift + S
+Key Enter
+Key Backspace
+```
+
+Timing
+
+```
+Wait 1.2
+```
+
+Other logic implemented:
+
+* Mouse move noise reduction
+* Double click detection
+* Dynamic hotkey detection
+* Fix for Ctrl character mapping (Ctrl+Z issue)
+* Modifier key tracking
+* Recording stop hotkey
+
+Stop Recording
+
+```
+Ctrl + Alt + S
+```
+
+---
+
+# Player Features Implemented
+
+`ActionPlayer`
+
+Executes commands:
+
+```
+Mouse Move
+Mouse Left Click
+Mouse Right Click
+Mouse Double Click
+Type text
+Hotkey
+Key Enter
+Wait
+```
+
+Additional features implemented:
+
+Playback speed control
+
+```
+self.speed
+```
+
+Stop automation hotkey
+
+```
+Ctrl + Alt + Q
+```
+
+Fail-safe stop
+
+```
+Move mouse to (0,0)
+```
+
+Resolution-independent click support
+
+Supports both:
+
+```
+Mouse Move 500,300
+Mouse Move 0.52,0.41
+```
+
+---
+
+# UI Features Implemented
+
+`MainWindow` using PySide6
+
+UI contains:
+
+```
+Record
+Play
+Load
+Save
+```
+
+Workflow steps displayed in:
+
+```
+QListWidget
+```
+
+Capabilities:
+
+* Record workflow
+* Load workflow
+* Save workflow
+* Run workflow
+
+Important behavior implemented:
+
+Automation UI hides during:
+
+```
+Recording
+Playback
+```
+
+and reappears when finished.
+
+Execution runs in **background threads**.
+
+---
+
+# Current Workflow Script Format
+
+Example automation file:
+
+```
+Mouse Move 520,410
+Mouse Left Click
+Wait 1
+Type text Hello
+Hotkey Ctrl + C
+Hotkey Ctrl + V
+Key Enter
+```
+
+---
+
+# Known Improvements Planned (Next Phase)
+
+Recorder Improvements
+
+1. Merge typed characters
+
+Instead of
+
+```
+Type text H
+Type text e
+Type text l
+```
+
+store
+
+```
+Type text Hello
+```
+
+2. Merge wait steps
+
+```
+Wait 3.96
+Wait 0.29
+```
+
+→
+
+```
+Wait 4.25
+```
+
+3. Prevent duplicate mouse clicks
+
+---
+
+UI Improvements
+
+* Add Step
+* Delete Step
+* Move Step Up/Down
+* Edit Step
+* Drag-drop steps
+* Recording indicator
+
+---
+
+Architecture Improvement Planned
+
+Move from **text-based step storage** to **structured actions**
+
+Example:
+
+Instead of:
+
+```
+Mouse Move 500,300
+```
+
+Use:
+
+```
+Action(type="mouse_move", x=500, y=300)
+```
+
+Benefits:
+
+* safer editing
+* easier validation
+* easier UI building
+* extensible automation engine
+
+---
+
+# Next Feature to Implement
+
+Improve **Workflow Editor UI**
+
+Add:
+
+```
+Add Step
+Delete Step
+Move Step Up
+Move Step Down
+Edit Step
+```
+
+Then upgrade automation engine to **structured step objects**.
+
+---
+
+# Instruction for Next Chat
+
+Continue improving the **Python UI Automation Tool**.
+
+Focus on:
+
+```
+Workflow editor improvements
+Step editing UI
+Structured action model
+Cleaner recorder output
+```
+
+Maintain:
+
+* simple code
+* modular architecture
+* independently testable classes
+* beginner-friendly comments.
+
+---
+
+When you start the new chat, just paste the summary and say:
+
+**“Continue improving the automation tool from this state.”**
+
+Then we can continue building the **next major improvements efficiently.**

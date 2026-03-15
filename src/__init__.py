@@ -7,10 +7,15 @@ __description__ = "Enterprise-grade UI automation tool with no-code interface"
 from src.ui import MainWindow
 from src.recorder import ActionRecorder
 from src.player import ActionPlayer
+from src.snipping import SnippingOverlayWindow, SnipPopup
+from src.object_repo import ObjectRepositoryManager
 
 
 __all__ = [
     'MainWindow',
     'ActionRecorder',
-    'ActionPlayer'
+    'ActionPlayer',
+    'SnippingOverlayWindow',
+    'SnipPopup', 
+    'ObjectRepositoryManager'
 ]

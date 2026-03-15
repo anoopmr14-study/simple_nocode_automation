@@ -32,6 +32,12 @@ b) [Record]: Additional requirements when integrate with other UI
         - Merge Wait Commands
         - Prevent Duplicate Mouse Clicks (Sometimes OS sends multiple events)
         - Stored file location should be under results/recordings
+        - Step Types Instead of Text:
+            - Instead of storing steps as text: Mouse Move 500,300
+            - store them internally as structured objects: Action(type="mouse_move", x=500, y=300)
+            - Benefits: safer editing, easier UI building, easier validation, future AI automation support
+        - Small delay with Count down on Overlay window or small window before start the recording
+
 
 c) [Playback]: Replay the actions from the selected recorded file
     - Hide UI when playback starts
@@ -43,4 +49,15 @@ c) [Playback]: Replay the actions from the selected recorded file
     - Stop Automation Hotkey (Ctrl + Alt + Q)    
     - Show UI again when playback stops
     
-    
+d) [Step Management]
+        Add Step
+        Edit step
+        Delete Step
+        Move Step Up
+        Move Step Down
+
+e) Automation Options
+    - automation engine should support three execution modes:
+    1️⃣ Coordinate based automation
+    2️⃣ Object image based automation
+    3️⃣ Hybrid automation (object + fallback coordinate)

@@ -1,16 +1,18 @@
 import sys
 from PySide6.QtWidgets import QApplication, QWidget
-from PySide6.QtCore import Qt, QRect, QPoint
+from PySide6.QtCore import Qt, QRect, QPoint, Signal
 from PySide6.QtGui import QPainter, QColor, QPen
 import mss
 import numpy as np
 from PIL import Image
 
-from .snipping_popup import SnipPopup
-
-
+#from .snipping_popup import SnipPopup
 
 class SnippingOverlayWindow(QWidget):
+
+    # Signal to return screenshot + rectangle
+    snip_completed = Signal(object, QRect)
+    
     def __init__(self):
         super().__init__()
 
@@ -53,17 +55,20 @@ class SnippingOverlayWindow(QWidget):
 
             self.capture(rect)
 
-            self.hide()   # IMPORTANT: remove fullscreen overlay
+            # Emit signal to main window
+            self.snip_completed.emit(self.screenshot, rect)
+
+            #self.hide()   # IMPORTANT: remove fullscreen overlay
 
             # Launch Snipping Popup to save the captured object
-            popup = SnipPopup(self.screenshot, rect)
-            popup.exec()
+            # popup = SnipPopup(self.screenshot, rect)
+            # popup.exec()
 
             # Close the overlay and not stop the Application
-            #self.close()
+            self.close()
 
             # Close the overlay and stop the Application
-            QApplication.quit()
+            #QApplication.quit()
 
     # Draw overlay + rectangle
     def paintEvent(self, event):

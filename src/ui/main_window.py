@@ -14,6 +14,9 @@ from PySide6.QtWidgets import (
 from src.recorder.action_recorder import ActionRecorder
 from src.player.action_player import ActionPlayer
 
+from src.snipping.snipping_overlay import SnippingOverlayWindow
+from src.snipping.snipping_popup import SnipPopup
+
 
 class MainWindow(QMainWindow):
 
@@ -103,6 +106,48 @@ class MainWindow(QMainWindow):
         for action in self.recorder.actions:
             self.step_list.addItem(action)   
 
+    # -------------------------------------------------
+    # Capture Object using Snipping Tool
+    # -------------------------------------------------
+    def capture_object(self):
+
+        # hide automation UI
+        self.hide()
+
+        self.snipping_tool = SnippingOverlayWindow()
+
+        # receive screenshot result
+        self.snipping_tool.snip_completed.connect(self.on_snip_complete)
+
+        self.snipping_tool.show()
+
+    # -------------------------------------------------
+    # On Snip Complete - receive screenshot + rectangle from snipping tool
+    # -------------------------------------------------
+    def on_snip_complete(self, screenshot, rect):
+
+        # show UI again
+        self.show()
+
+        popup = SnipPopup(screenshot, rect)
+
+        if popup.exec():
+            print("Object saved")
+
+            # object saved successfully
+            name = popup.name_edit.text().strip()
+
+            if name:
+                self.insert_object_step(name)
+
+    # -------------------------------------------------
+    # Insert Object Step - adds a step to the workflow list for the captured object
+    # -------------------------------------------------
+    def insert_object_step(self, object_name):
+
+        step = f"Click {object_name}"
+
+        self.workflow_list.addItem(step)
 
     # -------------------------------------------------
     # Play Automation   - runs in separate thread to avoid blocking UI
