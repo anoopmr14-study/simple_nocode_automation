@@ -21,3 +21,10 @@ a) Record button action class to record the user action (keyboard, mouse etc) an
 b) Additional requirements when integrate with other UI
         - During recording,  On Specific HotKey Combination Ctrl+Atl+V --> It should show overlay and allow to select the Rectangle and take the screenshot and store the co-ordinate as validation command --> Reuse  Snipping overlay (If possible)
         - After Save the recording, Replay Command UI should fill with these command and allow to play
+
+        - small improvement (~20 lines) that will make your recorder 10× cleaner by converting:
+            Type text H
+            Type text e
+            Type text l
+            Type text l
+            Type text o  into:   Type text Hello

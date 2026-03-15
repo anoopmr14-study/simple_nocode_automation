@@ -7,6 +7,7 @@ Stop recording using:
 CTRL + ALT + S
 """
 
+import time
 from pynput import mouse, keyboard
 from datetime import datetime
 
@@ -21,6 +22,21 @@ class ActionRecorder:
         self.mouse_listener = None
         self.keyboard_listener = None
         self.hotkey_listener = None
+
+        # For delay recording
+        self.last_event_time = time.time()
+
+        # For mouse noise removal
+        self.last_mouse_position = None
+
+        # For double click detection
+        self.last_click_time = 0
+        self.double_click_threshold = 0.4
+
+        # Track pressed modifier keys
+        self.ctrl_pressed = False
+        self.alt_pressed = False
+        self.shift_pressed = False
 
     # -----------------------------------------------------
     # Start Recording
@@ -61,49 +77,149 @@ class ActionRecorder:
 
         if not self.recording:
             return
+        
+        # store only last position
+        self.last_mouse_position = (x, y)
 
-        action = f"Mouse Move {x},{y}"
-        self.actions.append(action)
+        #action = f"Mouse Move {x},{y}"
+        #self.actions.append(action)
+
+    # -----------------------------------------------------
+    # Record Delay between actions 
+    # -----------------------------------------------------
+    def record_delay(self):
+        """Record wait time between actions"""
+
+        current_time = time.time()
+        delay = round(current_time - self.last_event_time, 2)
+
+        if delay > 0.2:  # ignore very small delays
+            self.actions.append(f"Wait {delay}")
+
+        self.last_event_time = current_time
 
     # -----------------------------------------------------
     # Mouse Click
     # -----------------------------------------------------
     def on_click(self, x, y, button, pressed):
-        
         if not self.recording:
             return
 
+        print(f"on_click at {(x, y)} with {button} {'Pressed' if pressed else 'Released'}")
+
         if pressed:
 
-            if button == mouse.Button.left:
-                action = "Mouse Left Click"
+            self.record_delay()
 
-            elif button == mouse.Button.right:
-                action = "Mouse Right Click"
+            # record final mouse position before click
+            if self.last_mouse_position:
+                mx, my = self.last_mouse_position
+                self.actions.append(f"Mouse Move {mx},{my}")
 
+            current_time = time.time()
+
+            # Detect double click
+            if current_time - self.last_click_time < self.double_click_threshold:
+                self.actions.append("Mouse Double Click")
             else:
-                return
+                if button == mouse.Button.left:
+                    self.actions.append("Mouse Left Click")
 
-            self.actions.append(action)
-            print("on_click " + str(action))    
+                elif button == mouse.Button.right:
+                    self.actions.append("Mouse Right Click")
+
+            self.last_click_time = current_time
 
     # -----------------------------------------------------
     # Keyboard Press
     # -----------------------------------------------------
     def on_key_press(self, key):
-        print("on_key_press " + str(key))    
+        """
+        Detect typing and dynamic hotkeys
+        Examples recorded:
+        Type text H
+        Hotkey Ctrl + C
+        Hotkey Ctrl + Shift + S
+        """
+        print(f"on_key_press {key}")    
+
         if not self.recording:
             return
 
+        # record delay between actions
+        self.record_delay()
+
         try:
+            # character key
             char = key.char
 
             if char:
-                action = f"Type text {char}"
-                self.actions.append(action)
+                # Fix control character issue (Ctrl + A -> Ctrl + Z)
+                if self.ctrl_pressed and ord(char) < 32:
+                    char = chr(ord(char) + 96)
+
+                # build hotkey if modifier pressed
+                if self.ctrl_pressed or self.alt_pressed or self.shift_pressed:
+
+                    hotkey_parts = []
+
+                    if self.ctrl_pressed:
+                        hotkey_parts.append("Ctrl")
+
+                    if self.alt_pressed:
+                        hotkey_parts.append("Alt")
+
+                    if self.shift_pressed:
+                        hotkey_parts.append("Shift")
+
+                    hotkey_parts.append(char.upper())
+
+                    hotkey_string = " + ".join(hotkey_parts)
+
+                    self.actions.append(f"Hotkey {hotkey_string}")
+
+                else:
+                    # normal typing
+                    self.actions.append(f"Type text {char}")
 
         except AttributeError:
-            pass
+            # handle special keys
+
+            if key in (keyboard.Key.ctrl_l, keyboard.Key.ctrl_r):
+                self.ctrl_pressed = True
+
+            elif key in (keyboard.Key.alt_l, keyboard.Key.alt_r):
+                self.alt_pressed = True
+
+            elif key == keyboard.Key.shift:
+                self.shift_pressed = True
+
+            # optional: detect special hotkeys like Alt+Tab
+            elif key == keyboard.Key.tab:
+
+                if self.alt_pressed:
+                    self.actions.append("Hotkey Alt + Tab")
+
+            elif key == keyboard.Key.enter:
+                self.actions.append("Key Enter")
+
+            elif key == keyboard.Key.backspace:
+                self.actions.append("Key Backspace")
+
+    # -----------------------------------------------------
+    # Keyboard Release
+    # -----------------------------------------------------
+    def on_key_release(self, key):
+
+        if key in (keyboard.Key.ctrl_l, keyboard.Key.ctrl_r):
+            self.ctrl_pressed = False
+
+        elif key in (keyboard.Key.alt_l, keyboard.Key.alt_r):
+            self.alt_pressed = False
+
+        elif key == keyboard.Key.shift:
+            self.shift_pressed = False
+
 
     # -----------------------------------------------------
     # Stop Recording
