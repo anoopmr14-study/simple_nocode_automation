@@ -14,7 +14,7 @@ import cv2
 import numpy as np
 from pynput import keyboard
 
-from src.ui import SnippingOverlayWindow
+from ui import SnippingOverlayWindow
 
 
 # -------------------------
@@ -54,8 +54,8 @@ def _configure_tesseract():
             print("Running outside PyInstaller bundle " + str(base_path))
        
         
-        tesseract_exe = os.path.join(base_path, "..\\..\\tesseract", "tesseract.exe")
-        tessdata_path = os.path.join(base_path, "..\\..\\tesseract", "tessdata")
+        tesseract_exe = os.path.join(base_path, "..\\..\\..\\tesseract", "tesseract.exe")
+        tessdata_path = os.path.join(base_path, "..\\..\\..\\tesseract", "tessdata")
 
 
         print(tessdata_path)

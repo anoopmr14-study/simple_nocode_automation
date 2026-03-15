@@ -1,5 +1,4 @@
 """UI package"""
-from .snipping_overlay import SnippingOverlayWindow
-from .snipping_popup import SnipPopup
+from .main_window import MainWindow
 
-__all__ = ['SnippingOverlayWindow', 'SnipPopup']
+__all__ = ['MainWindow']
