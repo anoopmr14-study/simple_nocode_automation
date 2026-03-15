@@ -7,6 +7,8 @@ Reads recorded automation file and executes actions.
 import time
 import pyautogui
 
+pyautogui.FAILSAFE = True
+
 
 class ActionPlayer:
 

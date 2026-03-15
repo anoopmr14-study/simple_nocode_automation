@@ -31,6 +31,8 @@ Requirements
         - Mouse Right Click     --> Mouse right click
         - Mouse Left Clcik      --> Mouse left click
         - Mouse Double Click    --> MOuse double click
+    - Stop Automation Hotkey (Ctrl + Alt + Q)
+
 3. Upon Click on "Insert Screenshot Object" button                      --> [Status: Done]
     - Hide the Automation Tool UI (all UIs)
     - Show a Transparent overlay UI with Recntagle Snipping Area which user can resize and Press Enter Key

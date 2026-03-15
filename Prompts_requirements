@@ -5,7 +5,7 @@ The application should be design in such way that it will be simple and easy to 
 
  I will share each requirements or enhancement or bug fixes steps by step, so you should remember the summary in less tokens for context and if more data in current chat session, summarize context and share me for use in new chat without any hallucination. You have to optimize the prompt if requires to reduce the usage of tokens without loosing the context. You have to build the classes with main method to test the same independently, but should be able to integrated with main application later. Make sure to use only free python libraries and code should have simple and easy to understand comment for any one who have less experience to easily understand and able to modify or fix if requires.  
 
-a) Record button action class to record the user action (keyboard, mouse etc) and save in file
+a) [Record]: Record button action class to record the user action (keyboard, mouse etc) and save in file
     - This will be later integrated in button in main automation UI. 
     - Record the Mouse and Key board operations (eventhough Automation UI hide) Commands with required parameters and store as temp file
         - Mouse operation should be saved in file as follows based on operation
@@ -18,7 +18,7 @@ a) Record button action class to record the user action (keyboard, mouse etc) an
             - Hotkey Ctrl + X   --> hotkey combination like Ctrl + X
     - On Ctrl+ Alt+ S --> Stop the Recording and show the UI with option to save the file 
 
-b) Additional requirements when integrate with other UI
+b) [Record]: Additional requirements when integrate with other UI
         - During recording,  On Specific HotKey Combination Ctrl+Atl+V --> It should show overlay and allow to select the Rectangle and take the screenshot and store the co-ordinate as validation command --> Reuse  Snipping overlay (If possible)
         - After Save the recording, Replay Command UI should fill with these command and allow to play
 
@@ -31,3 +31,11 @@ b) Additional requirements when integrate with other UI
         - Merge Wait Commands
         - Prevent Duplicate Mouse Clicks (Sometimes OS sends multiple events)
         - Stored file location should be under results/recordings
+
+c) [Playback]: Replay the actions from the selected recorded file
+    - Mouse operations
+    - keyboard operatoons
+    - Hotkey and Special keys
+    - Stop Automation Hotkey (Ctrl + Alt + Q)
+    - Playback Speed Control
+    - Critical Reliability Improvement (Screen Resolution Scaling)
