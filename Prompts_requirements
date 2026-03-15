@@ -7,6 +7,7 @@ The application should be design in such way that it will be simple and easy to 
 
 a) [Record]: Record button action class to record the user action (keyboard, mouse etc) and save in file
     - This will be later integrated in button in main automation UI. 
+    - Hide UI when recording starts
     - Record the Mouse and Key board operations (eventhough Automation UI hide) Commands with required parameters and store as temp file
         - Mouse operation should be saved in file as follows based on operation
             - Mouse Move X,Y        --> move the mouse to specified location
@@ -16,7 +17,7 @@ a) [Record]: Record button action class to record the user action (keyboard, mou
         - Keyboard operation shopuld be stored as follows
            -  Type text     --> Keyboard to type each character
             - Hotkey Ctrl + X   --> hotkey combination like Ctrl + X
-    - On Ctrl+ Alt+ S --> Stop the Recording and show the UI with option to save the file 
+    - On Ctrl+ Alt+ S --> Stop the Recording and show the Automation UI with option to save the file 
 
 b) [Record]: Additional requirements when integrate with other UI
         - During recording,  On Specific HotKey Combination Ctrl+Atl+V --> It should show overlay and allow to select the Rectangle and take the screenshot and store the co-ordinate as validation command --> Reuse  Snipping overlay (If possible)
@@ -33,9 +34,13 @@ b) [Record]: Additional requirements when integrate with other UI
         - Stored file location should be under results/recordings
 
 c) [Playback]: Replay the actions from the selected recorded file
+    - Hide UI when playback starts
     - Mouse operations
     - keyboard operatoons
     - Hotkey and Special keys
-    - Stop Automation Hotkey (Ctrl + Alt + Q)
     - Playback Speed Control
     - Critical Reliability Improvement (Screen Resolution Scaling)
+    - Stop Automation Hotkey (Ctrl + Alt + Q)    
+    - Show UI again when playback stops
+    
+    

@@ -18,6 +18,7 @@ Requirements
 =======================
 1. User will be able to  add commands in Text box.
 2. Upon click on "Play" button, system should 
+    - Hide the AUtomation UI
     - identify the controls with name and  
         - Control Name from Text in Screen (OCR)                        --> [Status: Working except for Control with multiple word] OR
         -  Object json lookup and identify the screenshot in the UI    --> [Status: Pending]
@@ -31,10 +32,11 @@ Requirements
         - Mouse Right Click     --> Mouse right click
         - Mouse Left Clcik      --> Mouse left click
         - Mouse Double Click    --> MOuse double click
-    - Stop Automation Hotkey (Ctrl + Alt + Q)                           --> [Status: Done]
     - Playback Speed Control                                            --> [Status: Done]
     - Screen Resolution Scaling
-
+    - Stop Automation Hotkey (Ctrl + Alt + Q)                           --> [Status: Done]
+    - Display the Automation UI on stop
+ 
 3. Upon Click on "Insert Screenshot Object" button                      --> [Status: Done]
     - Hide the Automation Tool UI (all UIs)
     - Show a Transparent overlay UI with Recntagle Snipping Area which user can resize and Press Enter Key
@@ -47,7 +49,14 @@ Requirements
     - Record the Mouse and Key board operations (eventhough UI hide) Commands with required parameters and store as temp file under results/recordings/                                --> [Status: Partial, file location to be corrected]
     - On Specific HotKey Combination Ctrl+Atl+V --> It should show overlay and allow to select the Rectangle and take the screenshot and store the co-ordinate as validation command --> Reuse Snipping overlay
     - On Ctrl+ Alt+ S --> Stop the Recording and show the UI with option to save the file and Replay Command UI should fill with these command and allow to play.                   --> [Status: Partial]
+    - Visual Recorder Indicator
 
+4. Step Management
+    Add Step
+    Edit step
+    Delete Step
+    Move Step Up
+    Move Step Down
 Issue seen
 =============
 1. Snipping Area and screenshot taken has small difference 

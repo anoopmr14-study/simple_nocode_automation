@@ -3,6 +3,7 @@ Main Workflow Editor UI
 """
 
 import sys
+import threading
 from PySide6.QtWidgets import (
     QApplication, QMainWindow, QWidget,
     QVBoxLayout, QHBoxLayout,
@@ -71,7 +72,7 @@ class MainWindow(QMainWindow):
         self.save_btn.clicked.connect(self.save_file)
 
     # -------------------------------------------------
-    # Start Recording
+    # Start Recording in thread to avoid blocking UI
     # -------------------------------------------------
     def start_recording(self):
 
@@ -81,15 +82,30 @@ class MainWindow(QMainWindow):
             "Recording started.\nPress Ctrl+Alt+S to stop."
         )
 
+        # hide automation UI
+        self.hide()
+
+        thread = threading.Thread(target=self.run_recording)
+        thread.start()
+
+    # -------------------------------------------------
+    # Recording Logic - runs in separate thread
+    # -------------------------------------------------
+    def run_recording(self):
+
         self.recorder.start_recording()
+
+        # show UI again
+        self.show()
 
         self.step_list.clear()
 
         for action in self.recorder.actions:
-            self.step_list.addItem(action)
+            self.step_list.addItem(action)   
+
 
     # -------------------------------------------------
-    # Play Automation
+    # Play Automation   - runs in separate thread to avoid blocking UI
     # -------------------------------------------------
     def play_workflow(self):
 
@@ -108,7 +124,25 @@ class MainWindow(QMainWindow):
             for action in actions:
                 f.write(action + "\n")
 
-        self.player.play_file(temp_file)
+        # hide UI
+        self.hide()
+
+        # run playback in separate thread to avoid blocking UI
+        thread = threading.Thread(
+            target=self.run_playback,
+            args=(temp_file,)
+        )
+        thread.start()
+
+    # -------------------------------------------------
+    # Run Playback Logic - runs in separate thread
+    # -------------------------------------------------
+    def run_playback(self, file):
+
+        self.player.play_file(file)
+
+        # show UI when playback finishes
+        self.show()
 
     # -------------------------------------------------
     # Load File
