@@ -63,6 +63,7 @@ Requirements
 Issue seen
 =============
 1. Snipping Area and screenshot taken has small difference 
+2. Unable to find the object name eventhough it is available? self.finder.find_object(object_name)
 
 
 Possible Limitations
