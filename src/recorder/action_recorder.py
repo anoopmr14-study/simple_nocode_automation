@@ -56,7 +56,8 @@ class ActionRecorder:
 
         # Keyboard listener
         self.keyboard_listener = keyboard.Listener(
-            on_press=self.on_key_press
+            on_press=self.on_key_press,
+            on_release=self.on_key_release
         )
 
         # Reliable global hotkey
@@ -145,60 +146,55 @@ class ActionRecorder:
 
         if not self.recording:
             return
-
-        # record delay between actions
-        self.record_delay()
-
+        
         try:
             # character key
             char = key.char
 
             if char:
+
+                # record delay between actions
+                self.record_delay()
+
                 # Fix control character issue (Ctrl + A -> Ctrl + Z)
                 if self.ctrl_pressed and ord(char) < 32:
                     char = chr(ord(char) + 96)
 
-                # build hotkey if modifier pressed
-                if self.ctrl_pressed or self.alt_pressed or self.shift_pressed:
+                # Build modifier list
+                modifiers = []
 
-                    hotkey_parts = []
+                if self.ctrl_pressed:
+                    modifiers.append("Ctrl")
 
-                    if self.ctrl_pressed:
-                        hotkey_parts.append("Ctrl")
+                if self.alt_pressed:
+                    modifiers.append("Alt")
 
-                    if self.alt_pressed:
-                        hotkey_parts.append("Alt")
+                if self.shift_pressed:
+                    modifiers.append("Shift")
 
-                    if self.shift_pressed:
-                        hotkey_parts.append("Shift")
-
-                    hotkey_parts.append(char.upper())
-
-                    hotkey_string = " + ".join(hotkey_parts)
-
-                    self.actions.append(f"Hotkey {hotkey_string}")
-
+                if modifiers:
+                    hotkey = " + ".join(modifiers + [char.upper()])
+                    self.actions.append(f"Hotkey {hotkey}")
                 else:
-                    # normal typing
-                    self.actions.append(f"Type text {char}")
+                    # Regular character typing
+                    self.actions.append(f"Type text {char}")               
 
         except AttributeError:
             # handle special keys
-
             if key in (keyboard.Key.ctrl_l, keyboard.Key.ctrl_r):
                 self.ctrl_pressed = True
 
             elif key in (keyboard.Key.alt_l, keyboard.Key.alt_r):
                 self.alt_pressed = True
 
-            elif key == keyboard.Key.shift:
+            elif key in (keyboard.Key.shift, keyboard.Key.shift_l, keyboard.Key.shift_r):
                 self.shift_pressed = True
 
-            # optional: detect special hotkeys like Alt+Tab
-            elif key == keyboard.Key.tab:
+            # Record special hotkeys like Alt+Tab
+            self.record_delay()
 
-                if self.alt_pressed:
-                    self.actions.append("Hotkey Alt + Tab")
+            if key == keyboard.Key.tab and self.alt_pressed:
+                self.actions.append("Hotkey Alt + Tab")
 
             elif key == keyboard.Key.enter:
                 self.actions.append("Key Enter")
@@ -212,12 +208,15 @@ class ActionRecorder:
     def on_key_release(self, key):
 
         if key in (keyboard.Key.ctrl_l, keyboard.Key.ctrl_r):
+            print(f"Reset ctrl") 
             self.ctrl_pressed = False
 
         elif key in (keyboard.Key.alt_l, keyboard.Key.alt_r):
+            print(f"Reset atl") 
             self.alt_pressed = False
 
-        elif key == keyboard.Key.shift:
+        elif key in (keyboard.Key.shift, keyboard.Key.shift_l, keyboard.Key.shift_r):
+            print(f"Reset shift")
             self.shift_pressed = False
 
 
