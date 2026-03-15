@@ -82,9 +82,6 @@ class ActionRecorder:
         # store only last position
         self.last_mouse_position = (x, y)
 
-        #action = f"Mouse Move {x},{y}"
-        #self.actions.append(action)
-
     # -----------------------------------------------------
     # Record Delay between actions 
     # -----------------------------------------------------

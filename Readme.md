@@ -39,9 +39,10 @@ Requirements
 
 3. Upon click on "Record" button, system should                         --> [Status: Pending]
     - Hide the Automation Tool UI (all UIs)
-    - Record the Mouse and Key board operations (eventhough UI hide) Commands with required parameters and store as temp file
-    - On Specific HotKey Combination Ctrl+Atl+V --> It should show overlay and allow to select the Rectangle and take the screenshot and store the co-ordinate as validation command --> Teuse Snipping overlay
-    - On Ctrl+ Alt+ S --> Stop the Recording and show the UI with option to save the file and Replay Command UI should fill with these command and allow to play.
+    
+    - Record the Mouse and Key board operations (eventhough UI hide) Commands with required parameters and store as temp file under results/recordings/                                --> [Status: Partial, file location to be corrected]
+    - On Specific HotKey Combination Ctrl+Atl+V --> It should show overlay and allow to select the Rectangle and take the screenshot and store the co-ordinate as validation command --> Reuse Snipping overlay
+    - On Ctrl+ Alt+ S --> Stop the Recording and show the UI with option to save the file and Replay Command UI should fill with these command and allow to play.                   --> [Status: Partial]
 
 Issue seen
 =============
