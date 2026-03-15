@@ -14,5 +14,21 @@
     "y": 148,
     "w": 828,
     "h": 441
+  },
+  {
+    "name": "File",
+    "image": "results/objects/File.png",
+    "x": 40,
+    "y": 8,
+    "w": 33,
+    "h": 24
+  },
+  {
+    "name": "Edit",
+    "image": "results/objects/Edit.png",
+    "x": 69,
+    "y": 2,
+    "w": 46,
+    "h": 33
   }
 ]

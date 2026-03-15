@@ -14,7 +14,7 @@ import cv2
 import numpy as np
 from pynput import keyboard
 
-from src.testapps import SnippingOverlayWindow
+from src.ui import SnippingOverlayWindow
 
 
 # -------------------------

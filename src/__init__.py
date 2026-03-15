@@ -5,10 +5,11 @@ __author__ = "Smart Automation Team"
 __description__ = "Enterprise-grade UI automation tool with no-code interface"
 
 from src.main import SimpleAutomation
-from src.testapps import SnippingOverlayWindow
-from src.testapps import SnipPopup
+from src.ui import SnippingOverlayWindow
+from src.ui import SnipPopup
 
 __all__ = [
     'SimpleAutomation',
-    'SnippingOverlayWindow'
+    'SnippingOverlayWindow',
+    'SnipPopup'
 ]
