@@ -69,7 +69,7 @@ class ActionRecorder:
     # Mouse Click
     # -----------------------------------------------------
     def on_click(self, x, y, button, pressed):
-
+        
         if not self.recording:
             return
 
@@ -85,12 +85,13 @@ class ActionRecorder:
                 return
 
             self.actions.append(action)
+            print("on_click " + str(action))    
 
     # -----------------------------------------------------
     # Keyboard Press
     # -----------------------------------------------------
     def on_key_press(self, key):
-
+        print("on_key_press " + str(key))    
         if not self.recording:
             return
 
@@ -108,11 +109,15 @@ class ActionRecorder:
     # Stop Recording
     # -----------------------------------------------------
     def stop_recording(self):
-
         print("\nRecording Stopped")
-
+        
+        # Set recording flag to False to stop listeners from adding more actions
         self.recording = False
 
+        # Save actions to file
+        self.save_actions()
+
+        # Stop listeners
         if self.mouse_listener:
             self.mouse_listener.stop()
 
@@ -122,12 +127,11 @@ class ActionRecorder:
         if self.hotkey_listener:
             self.hotkey_listener.stop()
 
-        self.save_actions()
-
     # -----------------------------------------------------
     # Save File
     # -----------------------------------------------------
     def save_actions(self):
+        print("save_actions " + str(self.actions))
 
         if not self.actions:
             print("No actions recorded")
@@ -137,9 +141,13 @@ class ActionRecorder:
 
         with open(filename, "w") as f:
             for action in self.actions:
-                f.write(action + "\n")
+                print("action " + str(action)) 
+                f.write(str(action) + "\n")
 
-        print(f"File saved: {filename}")
+            # force write to disk
+            f.flush()                
+
+        print("File saved: " + str(filename))
 
 
 # -----------------------------------------------------
