@@ -11,6 +11,9 @@ from PySide6.QtWidgets import (
     QFileDialog, QMessageBox
 )
 
+from src.core.workflow_manager import WorkflowManager
+from src.core.action import Action
+
 from src.recorder.action_recorder import ActionRecorder
 from src.player.action_player import ActionPlayer
 
@@ -26,8 +29,9 @@ class MainWindow(QMainWindow):
         self.setWindowTitle("Simple UI Automation Tool")
         self.resize(700, 500)
 
-        self.recorder = ActionRecorder()
-        self.player = ActionPlayer()
+        self.workflow = WorkflowManager()
+        self.recorder = ActionRecorder(callback=self.add_recorded_action)
+        # self.player = ActionPlayer()
 
         self.init_ui()
 
@@ -104,10 +108,25 @@ class MainWindow(QMainWindow):
         # show UI again
         self.show()
 
-        self.step_list.clear()
+        # self.step_list.clear()
 
-        for action in self.recorder.actions:
-            self.step_list.addItem(action)   
+        # for action in self.recorder.actions:
+        #     self.step_list.addItem(action)   
+
+    # -------------------------------------------------
+    # Add Recorded Action - callback from recorder to add action to workflow and update UI
+    # -------------------------------------------------   
+    def add_recorded_action(self, action):
+        self.workflow.add_action(action)
+        self.refresh_workflow_list()
+
+    # -------------------------------------------------
+    # Refresh Workflow List - updates the UI list widget to reflect current workflow actions
+    # -------------------------------------------------  
+    def refresh_workflow_list(self):
+        self.step_list.clear()
+        for action in self.workflow.get_actions():
+            self.step_list.addItem(str(action))
 
     # -------------------------------------------------
     # Capture Object using Snipping Tool
@@ -149,47 +168,35 @@ class MainWindow(QMainWindow):
     # Insert Object Step - adds a step to the workflow list for the captured object
     # -------------------------------------------------
     def insert_object_step(self, object_name):
-
-        step = f"Click Object {object_name}"
-
-        self.step_list.addItem(step)
+        action = Action(
+            action_type="object_click",
+            target=object_name
+        )
+        self.workflow.add_action(action)
+        self.refresh_workflow_list()
 
     # -------------------------------------------------
     # Play Automation   - runs in separate thread to avoid blocking UI
     # -------------------------------------------------
     def play_workflow(self):
 
-        if self.step_list.count() == 0:
+        if not self.workflow.get_actions():
             QMessageBox.warning(self, "Error", "No steps available")
             return
-
-        actions = []
-
-        for i in range(self.step_list.count()):
-            actions.append(self.step_list.item(i).text())
-
-        temp_file = "temp_playback.txt"
-
-        with open(temp_file, "w") as f:
-            for action in actions:
-                f.write(action + "\n")
 
         # hide UI
         self.hide()
 
         # run playback in separate thread to avoid blocking UI
-        thread = threading.Thread(
-            target=self.run_playback,
-            args=(temp_file,)
-        )
+        thread = threading.Thread(target=self.run_playback)
         thread.start()
 
     # -------------------------------------------------
     # Run Playback Logic - runs in separate thread
     # -------------------------------------------------
     def run_playback(self, file):
-
-        self.player.play_file(file)
+        player = ActionPlayer(self.workflow.get_actions())
+        player.play()
 
         # show UI when playback finishes
         self.show()
@@ -201,19 +208,16 @@ class MainWindow(QMainWindow):
 
         file_path, _ = QFileDialog.getOpenFileName(
             self,
-            "Open Recording",
+            "Open Workflow",
             "",
-            "Text Files (*.txt)"
+            "JSON Files (*.json)"
         )
 
         if not file_path:
             return
-
-        self.step_list.clear()
-
-        with open(file_path, "r") as f:
-            for line in f:
-                self.step_list.addItem(line.strip())
+        
+        self.workflow.load(file_path)
+        self.refresh_workflow_list()
 
     # -------------------------------------------------
     # Save File
@@ -222,18 +226,13 @@ class MainWindow(QMainWindow):
 
         file_path, _ = QFileDialog.getSaveFileName(
             self,
-            "Save Recording",
-            "",
-            "Text Files (*.txt)"
+            "Save Workflow",
+            "workflow.json",
+            "JSON Files (*.json)"
         )
 
         if not file_path:
             return
-
-        with open(file_path, "w") as f:
-
-            for i in range(self.step_list.count()):
-                action = self.step_list.item(i).text()
-                f.write(action + "\n")
-
-        QMessageBox.information(self, "Saved", "Workflow saved successfully")
+        
+        path = self.workflow.save(file_path)
+        QMessageBox.information(self, "Saved Workflow: ", "Workflow saved successfully: " + str(path))

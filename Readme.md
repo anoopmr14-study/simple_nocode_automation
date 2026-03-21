@@ -21,12 +21,13 @@ Requirements
     - Hide the AUtomation UI
     - identify the controls with name and  
         - Control Name from Text in Screen (OCR)                        --> [Status: Working except for Control with multiple word] OR
-        -  Object json lookup and identify the screenshot in the UI    --> [Status: Pending]
+        -  Object json lookup and identify the screenshot in the UI (use region using recorder co-ordinates)    --> [Status: Pending]
 
     - Perform operations                                                --> [Status: Done]
-        - Click on  --> Click on the Item with name
+        - Click on  --> Click on the Item with name (Object)
         - Type      --> Text
         - Hotkey Ctrl + X   --> hotkey combination simulation like Ctrl + X
+        - Specail Keys e.g. TAB, ESC etc                                --> [Status: Not Done]
     - Mouse operation simulation for commands like                       --> [Status: Done]
         - Mouse Move X,Y        --> move the mouse to specified location
         - Mouse Right Click     --> Mouse right click

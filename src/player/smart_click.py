@@ -28,8 +28,9 @@ class SmartClickExecutor:
         object_name,
         fallback_x=None,
         fallback_y=None,
-        timeout=100,
-        retry_interval=0.5
+        timeout=20,
+        retry_interval=0.5,
+        confidence=0.75
     ):
 
         """
@@ -39,48 +40,31 @@ class SmartClickExecutor:
         If not found and fallback coordinates exist,
         click fallback position.
         """
-
         start_time = time.time()
 
         while time.time() - start_time < timeout:
 
-            location = self.finder.find_object(object_name)
+            location = self.finder.find_object(object_name, confidence=confidence)
 
             if location:
-
                 x, y = location
 
                 print(f"Object '{object_name}' found at {x},{y}")
 
                 pyautogui.moveTo(x, y)
                 pyautogui.click()
-
                 return True
-
-            print(f"Retrying object search: {object_name}")
 
             time.sleep(retry_interval)
 
-        # -----------------------------
         # fallback coordinate click
-        # -----------------------------
-
         if fallback_x is not None and fallback_y is not None:
-
-            print(
-                f"Object '{object_name}' not found. "
-                f"Using fallback coordinates."
-            )
-
+            print(f"Fallback click at {fallback_x},{fallback_y}")
             pyautogui.moveTo(fallback_x, fallback_y)
             pyautogui.click()
-
             return True
 
-        # -----------------------------
         # failure
-        # -----------------------------
-
         raise Exception(
             f"Object '{object_name}' not found within {timeout} seconds"
         )

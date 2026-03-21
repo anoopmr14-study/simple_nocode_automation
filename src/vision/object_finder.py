@@ -45,7 +45,7 @@ class ObjectFinder:
     # -------------------------------------------------
     # Find object on screen
     # -------------------------------------------------
-    def find_object(self, object_name):
+    def find_object(self, object_name, confidence=None):
 
         obj = self.repo.get_object(object_name)
 
@@ -59,17 +59,27 @@ class ObjectFinder:
             print("Failed to load template image")
             return None
 
-        screen = self.capture_screen()
+        # Capture current screen
+        # FIXME:: Capture only specific region for better performance
+        current_screen = self.capture_screen()
 
+        # ✅ Convert to grayscale (IMPORTANT)
+        current_screen_gray = cv2.cvtColor(current_screen, cv2.COLOR_BGR2GRAY)
+        template_gray = cv2.cvtColor(template, cv2.COLOR_BGR2GRAY)
+
+        # Perform template matching (image comparison)
         result = cv2.matchTemplate(
-            screen,
-            template,
+            current_screen_gray,
+            template_gray,
             cv2.TM_CCOEFF_NORMED
         )
 
         min_val, max_val, min_loc, max_loc = cv2.minMaxLoc(result)
+        used_confidence = confidence if confidence else self.confidence
 
-        if max_val < self.confidence:
+        print(f"[DEBUG] Match confidence: {max_val}")
+
+        if max_val < used_confidence:
             return None
 
         h, w = template.shape[:2]

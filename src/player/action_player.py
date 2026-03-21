@@ -7,6 +7,7 @@ Reads recorded automation file and executes actions.
 import time
 import pyautogui
 from pynput import keyboard
+from core import action
 from src.player.smart_click import SmartClickExecutor
 
 
@@ -15,7 +16,8 @@ pyautogui.FAILSAFE = True
 
 class ActionPlayer:
 
-    def __init__(self):
+    def __init__(self, actions):
+        self.actions = actions
         self.speed = 1.0   # 1 = normal, 2 = 2x faster, 0.5 = slower
         self.running = False
         self.stop_listener = None
@@ -36,28 +38,41 @@ class ActionPlayer:
     # -------------------------------------------------
     # Play File
     # -------------------------------------------------
-    def play_file(self, filepath):
-        print(f"Playing automation file: {filepath}")
+    # def play_file(self, filepath):
+    #     print(f"Playing automation file: {filepath}")
 
-        # Set running flag and start hotkey listener
+    #     # Set running flag and start hotkey listener
+    #     self.running = True
+    #     self.start_stop_listener()
+
+    #     # Read actions from file
+    #     with open(filepath, "r") as file:
+    #         actions = file.readlines()
+
+    #     # Execute actions sequentially
+    #     for action in actions:
+    #         if not self.running:
+    #             break
+
+    #         action = action.strip()
+    #         if not action:
+    #             continue
+
+    #         print("Executing:", action)
+    #         self.execute_action(action)
+    def play(self):
+        print("Starting automation...")
+
         self.running = True
         self.start_stop_listener()
 
-        # Read actions from file
-        with open(filepath, "r") as file:
-            actions = file.readlines()
-
-        # Execute actions sequentially
-        for action in actions:
+        for action in self.actions:
             if not self.running:
                 break
 
-            action = action.strip()
-            if not action:
-                continue
-
             print("Executing:", action)
             self.execute_action(action)
+
 
     # -------------------------------------------------
     # Execute Action
@@ -76,71 +91,54 @@ class ActionPlayer:
         # -----------------------------
         # Wait
         # -----------------------------
-        if action.startswith("Wait"):
-
-            delay = float(action.split(" ")[1])
-            #time.sleep(delay)
-            time.sleep(delay / self.speed)
+        if action.action_type == "wait":
+            time.sleep(action.delay / self.speed)
 
         # -----------------------------
         # Mouse Move
         # -----------------------------
-        elif action.startswith("Mouse Move"):
-
-            pos = action.replace("Mouse Move ", "")
-            x, y = pos.split(",")
-
-            pyautogui.moveTo(int(x), int(y))
+        elif action.action_type == "mouse_move":
+            pyautogui.moveTo(action.x, action.y)
 
         # -----------------------------
         # Mouse Left Click
         # -----------------------------
-        elif action == "Mouse Left Click":
-
-            pyautogui.click()
+        elif action.action_type == "click":
+            pyautogui.click(action.x, action.y)
 
         # -----------------------------
         # Mouse Right Click
         # -----------------------------
-        elif action == "Mouse Right Click":
-
-            pyautogui.rightClick()
+        elif action.action_type == "right_click":
+            pyautogui.rightClick(action.x, action.y)
 
         # -----------------------------
         # Mouse Double Click
         # -----------------------------
-        elif action == "Mouse Double Click":
-
-            pyautogui.doubleClick()
+        elif action.action_type == "double_click":
+            pyautogui.doubleClick(action.x, action.y)
 
         # -----------------------------
         # Type Text
         # -----------------------------
-        elif action.startswith("Type text"):
-
-            text = action.replace("Type text ", "")
-            pyautogui.write(text)
+        elif action.action_type == "type":
+            pyautogui.write(action.text)
 
         # -----------------------------
         # Hotkey
         # -----------------------------
-        elif action.startswith("Hotkey"):
-
-            keys = action.replace("Hotkey ", "").split(" + ")
-
+        elif action.action_type == "hotkey":
+            keys = action.text.split(" + ")
             pyautogui.hotkey(*[k.lower() for k in keys])
 
         # -----------------------------
         # Special Keys
         # -----------------------------
-        elif action.startswith("Key"):
-
-            key = action.replace("Key ", "").lower()
-
-            pyautogui.press(key)
+        elif action.action_type == "key":
+            pyautogui.press(action.text.lower())
 
         else:
-            print("Unknown action:", action)
+            print("Unknown action:", action.action_type)
 
 
 # -------------------------------------------------

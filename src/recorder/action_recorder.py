@@ -7,16 +7,20 @@ Stop recording using:
 CTRL + ALT + S
 """
 
+import json
 import time
 from pynput import mouse, keyboard
 from datetime import datetime
+from core import action
+from src.core.action import Action
 
 
 class ActionRecorder:
 
-    def __init__(self):
+    def __init__(self, callback=None):
+        self.record_callback = callback
 
-        self.actions = []
+        self.actions = []  # fallback (for testing)
         self.recording = False
 
         self.mouse_listener = None
@@ -43,8 +47,7 @@ class ActionRecorder:
     # -----------------------------------------------------
     def start_recording(self):
 
-        print("Recording Started")
-        print("Press CTRL + ALT + S to stop")
+        print("Recording Started. CTRL + ALT + S to stop")
 
         self.recording = True
 
@@ -72,15 +75,13 @@ class ActionRecorder:
         self.mouse_listener.join()
 
     # -----------------------------------------------------
-    # Mouse Move
+    # Emit action to callback or store in list
     # -----------------------------------------------------
-    def on_move(self, x, y):
-
-        if not self.recording:
-            return
-        
-        # store only last position
-        self.last_mouse_position = (x, y)
+    def _emit(self, action):
+        if self.record_callback:
+            self.record_callback(action)
+        else:
+            self.actions.append(action)  # fallback for testing
 
     # -----------------------------------------------------
     # Record Delay between actions 
@@ -92,10 +93,21 @@ class ActionRecorder:
         delay = round(current_time - self.last_event_time, 2)
 
         if delay > 0.2:  # ignore very small delays
-            self.actions.append(f"Wait {delay}")
+            action = Action(action_type="wait", delay=delay)
+            self._emit(action)
+            #self.actions.append(f"Wait {delay}")
 
         self.last_event_time = current_time
 
+    # -----------------------------------------------------
+    # Mouse Move
+    # -----------------------------------------------------
+    def on_move(self, x, y):
+        if self.recording:
+            # store only last position
+             self.last_mouse_position = (x, y)
+        
+        
     # -----------------------------------------------------
     # Mouse Click
     # -----------------------------------------------------
@@ -112,20 +124,27 @@ class ActionRecorder:
             # record final mouse position before click
             if self.last_mouse_position:
                 mx, my = self.last_mouse_position
-                self.actions.append(f"Mouse Move {mx},{my}")
+                self._emit(Action(action_type="mouse_move", x=mx, y=my))
+                # self.actions.append(f"Mouse Move {mx},{my}")
+            else:
+                mx, my = x, y
 
             current_time = time.time()
 
             # Detect double click
             if current_time - self.last_click_time < self.double_click_threshold:
-                self.actions.append("Mouse Double Click")
+                #self.actions.append("Mouse Double Click")
+                action = Action(action_type="double_click", x=mx, y=my)
             else:
                 if button == mouse.Button.left:
-                    self.actions.append("Mouse Left Click")
+                    #self.actions.append("Mouse Left Click")
+                    action = Action(action_type="click", x=mx, y=my)
 
                 elif button == mouse.Button.right:
-                    self.actions.append("Mouse Right Click")
+                    #self.actions.append("Mouse Right Click")
+                    action = Action(action_type="right_click", x=mx, y=my)
 
+            self._emit(action)
             self.last_click_time = current_time
 
     # -----------------------------------------------------
@@ -171,10 +190,12 @@ class ActionRecorder:
 
                 if modifiers:
                     hotkey = " + ".join(modifiers + [char.upper()])
-                    self.actions.append(f"Hotkey {hotkey}")
+                    self._emit(Action(action_type="hotkey", text=hotkey))
+                    # self.actions.append(f"Hotkey {hotkey}")
                 else:
                     # Regular character typing
-                    self.actions.append(f"Type text {char}")               
+                    self._emit(Action(action_type="type", text=char))
+                    # self.actions.append(f"Type text {char}")               
 
         except AttributeError:
             # handle special keys
@@ -191,13 +212,16 @@ class ActionRecorder:
             self.record_delay()
 
             if key == keyboard.Key.tab and self.alt_pressed:
-                self.actions.append("Hotkey Alt + Tab")
+                self._emit(Action(action_type="hotkey", text="Alt + Tab"))
+                # self.actions.append("Hotkey Alt + Tab")
 
             elif key == keyboard.Key.enter:
-                self.actions.append("Key Enter")
+                self._emit(Action(action_type="key", text="Enter"))
+                # self.actions.append("Key Enter")
 
             elif key == keyboard.Key.backspace:
-                self.actions.append("Key Backspace")
+                self._emit(Action(action_type="key", text="Backspace"))
+                # self.actions.append("Key Backspace")
 
     # -----------------------------------------------------
     # Keyboard Release
@@ -251,13 +275,18 @@ class ActionRecorder:
 
         filename = f"recording_{datetime.now().strftime('%Y%m%d_%H%M%S')}.txt"
 
-        with open(filename, "w") as f:
-            for action in self.actions:
-                print("action " + str(action)) 
-                f.write(str(action) + "\n")
+        data = [action.to_dict() for action in self.actions]    
 
-            # force write to disk
-            f.flush()                
+        with open(filename, "w") as f:
+            json.dump(data, f, indent=4)
+
+        # with open(filename, "w") as f:
+        #     for action in self.actions:
+        #         print("action " + str(action)) 
+        #         f.write(str(action) + "\n")
+
+        #     # force write to disk
+        #     f.flush()                
 
         print("File saved: " + str(filename))
 
