@@ -19,6 +19,8 @@ class Action:
         target: Optional[str] = None,
         x: Optional[int] = None,
         y: Optional[int] = None,
+        w: Optional[int] = None,
+        h: Optional[int] = None,                
         text: Optional[str] = None,
         delay: float = 0.0
     ):
@@ -26,6 +28,8 @@ class Action:
         self.target = target            # object name
         self.x = x                      # fallback x
         self.y = y                      # fallback y
+        self.w = w                      # width
+        self.h = h                      # height    
         self.text = text                # for typing
         self.delay = delay              # wait before action
 
@@ -38,6 +42,8 @@ class Action:
             "target": self.target,
             "x": self.x,
             "y": self.y,
+            "w": self.w,
+            "h": self.h,
             "text": self.text,
             "delay": self.delay
         }
@@ -52,6 +58,8 @@ class Action:
             target=data.get("target"),
             x=data.get("x"),
             y=data.get("y"),
+            w=data.get("w"),
+            h=data.get("h"),
             text=data.get("text"),
             delay=data.get("delay", 0.0)
         )
@@ -61,11 +69,11 @@ class Action:
     # -------------------------------
     def __str__(self):
 
-        if self.action_type in ["mouse_move", "MOUSE MOVE"]:
+        if self.action_type in ["mouse_move", "Mouse Move"]:
             return f"Mouse Move ({self.x}, {self.y})"
         
         if self.action_type in ["object_click", "Click Object"]:
-            return f"Click Object  '{self.target}'"
+            return f"Click Object  '{self.target}' with x: {self.x}, y: {self.y}, w: {self.w}, h: {self.h}"
         
         if self.action_type in ["click", "Click"]:
             return f"Click  ({self.x}, {self.y})"

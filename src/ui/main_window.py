@@ -151,10 +151,10 @@ class MainWindow(QMainWindow):
     # open step editor dialog to add a new step manually
     # -------------------------------------------------
     def open_step_editor(self):
-        dialog = StepEditorDialog(self)
+        editor_dialog = StepEditorDialog(self)
 
-        if dialog.exec():
-            action = dialog.get_action()
+        if editor_dialog.exec():
+            action = editor_dialog.get_action()
             if action:
                 self.workflow.add_action(action)
                 self.refresh_workflow_list()
@@ -243,16 +243,23 @@ class MainWindow(QMainWindow):
             name = popup.name_edit.text().strip()
 
             if name:
-                self.insert_object_step(name)
+                self.insert_object_step(name, rect)
 
     # -------------------------------------------------
     # Insert Object Step - adds a step to the workflow list for the captured object
     # -------------------------------------------------
-    def insert_object_step(self, object_name):
+    def insert_object_step(self, object_name, rect):
+        
         action = Action(
-            action_type="object_click",
-            target=object_name
+            action_type="Click Object",
+            target=object_name,
+            x=rect.x(),
+            y=rect.y(),
+            w=rect.width(),
+            h=rect.height()
         )
+
+        print(f"Inserting object step: {object_name} at {rect} action {action}")
         self.workflow.add_action(action)
         self.refresh_workflow_list()
 

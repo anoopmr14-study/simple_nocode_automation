@@ -21,10 +21,11 @@ class StepEditorDialog(QDialog):
         self.setMinimumWidth(300)
 
         self.repo = ObjectRepositoryManager()
+        #self.objects = self.repo.load_objects()
         self.action = action
 
         self.init_ui()
-        self.load_objects()
+        self.load_objects_dropdown()
 
         if action:
             self.load_action(action)
@@ -51,12 +52,21 @@ class StepEditorDialog(QDialog):
         layout.addWidget(self.object_dropdown)
 
         # Coordinates
-        layout.addWidget(QLabel("Co-oridnate: X"))
+        layout.addWidget(QLabel("X- Co-oridnate"))
         self.x_input = QLineEdit()
         layout.addWidget(self.x_input)
-        layout.addWidget(QLabel("Co-oridnate: Y"))
+
+        layout.addWidget(QLabel("Y- Co-oridnate"))
         self.y_input = QLineEdit()
         layout.addWidget(self.y_input)
+
+        layout.addWidget(QLabel("Width"))
+        self.w_input = QLineEdit()
+        layout.addWidget(self.w_input)
+
+        layout.addWidget(QLabel("Height"))
+        self.h_input = QLineEdit()
+        layout.addWidget(self.h_input)
 
         # Text
         layout.addWidget(QLabel("Text"))
@@ -82,13 +92,17 @@ class StepEditorDialog(QDialog):
         # events
         self.save_btn.clicked.connect(self.save_action)
         self.cancel_btn.clicked.connect(self.reject)
-        self.action_type.currentTextChanged.connect(self.update_fields)
-        self.update_fields()
+        self.action_type.currentTextChanged.connect(self.update_on_action_type_change)
+        self.object_dropdown.currentTextChanged.connect(self.update_on_object_change)
+
+        # For initial state
+        self.update_on_action_type_change()
+        self.update_on_object_change()
 
     # -------------------------------------------------
     # Load objects from repository to dropdown
     # -------------------------------------------------
-    def load_objects(self):
+    def load_objects_dropdown(self):
         objects = self.repo.list_objects()
         self.object_dropdown.addItems(objects)
 
@@ -107,6 +121,12 @@ class StepEditorDialog(QDialog):
         if action.y:
             self.y_input.setText(str(action.y))
 
+        if action.w:
+            self.x_input.setText(str(action.w))
+
+        if action.h:
+            self.y_input.setText(str(action.h))
+
         if action.text:
             self.text_input.setText(action.text)
 
@@ -122,6 +142,8 @@ class StepEditorDialog(QDialog):
 
         x = int(self.x_input.text()) if self.x_input.text() else None
         y = int(self.y_input.text()) if self.y_input.text() else None
+        w = int(self.w_input.text()) if self.w_input.text() else None
+        h = int(self.h_input.text()) if self.h_input.text() else None
         text = self.text_input.text() or None
         delay = float(self.delay_input.text()) if self.delay_input.text() else 0.0
 
@@ -134,9 +156,12 @@ class StepEditorDialog(QDialog):
             target=target,
             x=x,
             y=y,
+            w=w,
+            h=h,
             text=text,
             delay=delay
         )
+        print("Saved Action:", self.result_action.to_dict())
 
         self.accept()
 
@@ -149,18 +174,28 @@ class StepEditorDialog(QDialog):
     # -------------------------------------------------
     # Update enabled/disabled fields based on selected action type
     # -------------------------------------------------  
-    def update_fields(self):
+    def update_on_action_type_change(self):
         action_type = self.action_type.currentText()
+
+        # Clear all fields except action type and view
+        self.clear_all_fields()
 
         # Reset all
         self.object_dropdown.setEnabled(False)
         self.x_input.setEnabled(False)
         self.y_input.setEnabled(False)
+        self.w_input.setEnabled(False)
+        self.h_input.setEnabled(False)
         self.text_input.setEnabled(False)
         self.delay_input.setEnabled(False)
 
         if action_type in ["object_click", "Click Object"]:
             self.object_dropdown.setEnabled(True)
+            self.x_input.setEnabled(True)
+            self.y_input.setEnabled(True)
+            self.w_input.setEnabled(True)
+            self.h_input.setEnabled(True)
+            self.update_on_object_change()  # to populate coordinates if object selected
 
         elif action_type in ["mouse_move", "Mouse Move", "click", "Click", "right_click", "Right Click", "double_click", "Double Click"]:
             self.x_input.setEnabled(True)
@@ -172,3 +207,26 @@ class StepEditorDialog(QDialog):
 
         elif action_type in ["wait", "Wait"]:
             self.delay_input.setEnabled(True)
+    # -------------------------------------------------
+    # Update enabled/disabled fields based on selected action type
+    # -------------------------------------------------  
+    def update_on_object_change(self):
+        if self.action_type.currentText() != "Click Object":
+            return
+        
+        object_name = self.object_dropdown.currentText()
+        obj = self.repo.get_object(object_name)
+
+        if obj:
+            self.x_input.setText(str(obj.get("x")))
+            self.y_input.setText(str(obj.get("y")))
+            self.w_input.setText(str(obj.get("w")))
+            self.h_input.setText(str(obj.get("h")))
+
+    def clear_all_fields(self):
+        self.x_input.clear()
+        self.y_input.clear()
+        self.w_input.clear()
+        self.h_input.clear()
+        self.text_input.clear()
+        self.delay_input.clear()

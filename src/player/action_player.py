@@ -73,9 +73,7 @@ class ActionPlayer:
         # -----------------------------
         elif action.action_type in ["object_click", "Click Object"]:
                 self.smart_click.click_object(
-                    action.target,
-                    action.x,
-                    action.y
+                    action
                 )   
 
         # -----------------------------

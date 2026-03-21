@@ -250,9 +250,6 @@ class ActionRecorder:
         # Set recording flag to False to stop listeners from adding more actions
         self.recording = False
 
-        # Save actions to file
-        #self.save_actions()
-
         # Stop listeners
         if self.mouse_listener:
             self.mouse_listener.stop()
@@ -282,15 +279,7 @@ class ActionRecorder:
         data = [action.to_dict() for action in self.actions]    
 
         with open(filename, "w") as f:
-            json.dump(data, f, indent=4)
-
-        # with open(filename, "w") as f:
-        #     for action in self.actions:
-        #         print("action " + str(action)) 
-        #         f.write(str(action) + "\n")
-
-        #     # force write to disk
-        #     f.flush()                
+            json.dump(data, f, indent=4)        
 
         print("File saved: " + str(filename))
 

@@ -55,31 +55,18 @@ class SnippingOverlayWindow(QWidget):
 
             self.capture(rect)
 
-            # # Emit signal to main window
-            # self.snip_completed.emit(self.screenshot, rect)
-
-            #self.hide()   # IMPORTANT: remove fullscreen overlay
-
-            # Launch Snipping Popup to save the captured object
-            # popup = SnipPopup(self.screenshot, rect)
-            # popup.exec()
-
             # Close the overlay and not stop the Application
             self.close()
 
             # Emit signal to main window
             self.snip_completed.emit(self.screenshot, rect)
-            
-            # Close the overlay and stop the Application
-            #QApplication.quit()
+
 
     # Draw overlay + rectangle
     def paintEvent(self, event):
         painter = QPainter(self)
 
-        # Dark overlay
-        #painter.fillRect(self.rect(), QColor(0, 0, 0, 100))
-        # dim screen
+        # Dim screen
         painter.fillRect(self.rect(), QColor(0, 0, 0, 120))   
 
         if self.dragging:
