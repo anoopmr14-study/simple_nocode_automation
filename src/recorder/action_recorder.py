@@ -11,14 +11,14 @@ import json
 import time
 from pynput import mouse, keyboard
 from datetime import datetime
-from core import action
 from src.core.action import Action
 
 
 class ActionRecorder:
 
-    def __init__(self, callback=None):
+    def __init__(self, callback=None, stop_callback=None):
         self.record_callback = callback
+        self.stop_callback = stop_callback
 
         self.actions = []  # fallback (for testing)
         self.recording = False
@@ -251,7 +251,7 @@ class ActionRecorder:
         self.recording = False
 
         # Save actions to file
-        self.save_actions()
+        #self.save_actions()
 
         # Stop listeners
         if self.mouse_listener:
@@ -262,6 +262,10 @@ class ActionRecorder:
 
         if self.hotkey_listener:
             self.hotkey_listener.stop()
+
+        # ✅ notify UI
+        if self.stop_callback:
+            self.stop_callback()
 
     # -----------------------------------------------------
     # Save File

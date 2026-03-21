@@ -9,8 +9,8 @@ from src.recorder import ActionRecorder
 from src.player import ActionPlayer
 from src.snipping import SnippingOverlayWindow, SnipPopup
 from src.object_repo import ObjectRepositoryManager
-from src.core.workflow_manager import WorkflowManager
-from src.core.action import Action
+from src.core import WorkflowManager
+from src.core import Action
 
 
 __all__ = [

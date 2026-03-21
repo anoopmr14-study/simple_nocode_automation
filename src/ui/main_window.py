@@ -30,8 +30,8 @@ class MainWindow(QMainWindow):
         self.resize(700, 500)
 
         self.workflow = WorkflowManager()
-        self.recorder = ActionRecorder(callback=self.add_recorded_action)
-        # self.player = ActionPlayer()
+        self.recorder = ActionRecorder(callback=self.add_recorded_action,
+                                        stop_callback=self.on_recording_stopped)
 
         self.init_ui()
 
@@ -114,6 +114,13 @@ class MainWindow(QMainWindow):
         #     self.step_list.addItem(action)   
 
     # -------------------------------------------------
+    # Stop Recording - callback from recorder when recording is stopped to update UI
+    # -------------------------------------------------
+    def on_recording_stopped(self):
+        self.show()
+        self.refresh_workflow_list()
+
+    # -------------------------------------------------
     # Add Recorded Action - callback from recorder to add action to workflow and update UI
     # -------------------------------------------------   
     def add_recorded_action(self, action):
@@ -194,12 +201,14 @@ class MainWindow(QMainWindow):
     # -------------------------------------------------
     # Run Playback Logic - runs in separate thread
     # -------------------------------------------------
-    def run_playback(self, file):
+    def run_playback(self):
         player = ActionPlayer(self.workflow.get_actions())
         player.play()
 
         # show UI when playback finishes
         self.show()
+        # from PySide6.QtCore import QTimer
+        # QTimer.singleShot(0, self.show)
 
     # -------------------------------------------------
     # Load File

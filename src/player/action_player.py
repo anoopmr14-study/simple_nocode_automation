@@ -7,7 +7,7 @@ Reads recorded automation file and executes actions.
 import time
 import pyautogui
 from pynput import keyboard
-from core import action
+from src.core.action import Action
 from src.player.smart_click import SmartClickExecutor
 
 
@@ -38,28 +38,6 @@ class ActionPlayer:
     # -------------------------------------------------
     # Play File
     # -------------------------------------------------
-    # def play_file(self, filepath):
-    #     print(f"Playing automation file: {filepath}")
-
-    #     # Set running flag and start hotkey listener
-    #     self.running = True
-    #     self.start_stop_listener()
-
-    #     # Read actions from file
-    #     with open(filepath, "r") as file:
-    #         actions = file.readlines()
-
-    #     # Execute actions sequentially
-    #     for action in actions:
-    #         if not self.running:
-    #             break
-
-    #         action = action.strip()
-    #         if not action:
-    #             continue
-
-    #         print("Executing:", action)
-    #         self.execute_action(action)
     def play(self):
         print("Starting automation...")
 
@@ -78,16 +56,6 @@ class ActionPlayer:
     # Execute Action
     # -------------------------------------------------
     def execute_action(self, action):
-
-        # -----------------------------
-        # Click Object with SmartClickExecutor (with retry and timeout)
-        # -----------------------------
-        if action.startswith("Click Object"):
-            object_name = action.replace("Click Object ", "")
-
-            # Using SmartClickExecutor for object clicks
-            self.smart_click.click_object(object_name, None, None, 200, 0.75)
-
         # -----------------------------
         # Wait
         # -----------------------------
@@ -117,6 +85,16 @@ class ActionPlayer:
         # -----------------------------
         elif action.action_type == "double_click":
             pyautogui.doubleClick(action.x, action.y)
+
+        # -----------------------------
+        # Click Object with SmartClickExecutor (with retry and timeout)
+        # -----------------------------
+        elif action.action_type == "object_click":
+                self.smart_click.click_object(
+                    action.target,
+                    action.x,
+                    action.y
+                )         
 
         # -----------------------------
         # Type Text
