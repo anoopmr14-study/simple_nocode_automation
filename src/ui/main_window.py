@@ -16,6 +16,7 @@ from src.core.action import Action
 
 from src.recorder.action_recorder import ActionRecorder
 from src.player.action_player import ActionPlayer
+from src.ui.step_editor_dialog import StepEditorDialog
 
 from src.snipping.snipping_overlay import SnippingOverlayWindow
 from src.snipping.snipping_popup import SnipPopup
@@ -49,12 +50,14 @@ class MainWindow(QMainWindow):
         button_layout = QHBoxLayout()
 
         self.record_btn = QPushButton("Record")
+        self.add_step_btn = QPushButton("Add Step")
         self.insert_obj_btn = QPushButton("Insert Object")
         self.play_btn = QPushButton("Play")
         self.load_btn = QPushButton("Load")
         self.save_btn = QPushButton("Save")
 
         button_layout.addWidget(self.record_btn)
+        button_layout.addWidget(self.add_step_btn)
         button_layout.addWidget(self.insert_obj_btn)
         button_layout.addWidget(self.play_btn)
         button_layout.addWidget(self.load_btn)
@@ -76,6 +79,7 @@ class MainWindow(QMainWindow):
         # Connect Events
         # -----------------------------
         self.record_btn.clicked.connect(self.start_recording)
+        self.add_step_btn.clicked.connect(self.open_step_editor)
         self.insert_obj_btn.clicked.connect(self.capture_object)
         self.play_btn.clicked.connect(self.play_workflow)
         self.load_btn.clicked.connect(self.load_file)
@@ -134,6 +138,19 @@ class MainWindow(QMainWindow):
         self.step_list.clear()
         for action in self.workflow.get_actions():
             self.step_list.addItem(str(action))
+
+    # -------------------------------------------------
+    # open step editor dialog to add a new step manually
+    # -------------------------------------------------
+    def open_step_editor(self):
+        dialog = StepEditorDialog(self)
+
+        if dialog.exec():
+            action = dialog.get_action()
+            if action:
+                self.workflow.add_action(action)
+                self.refresh_workflow_list()
+
 
     # -------------------------------------------------
     # Capture Object using Snipping Tool

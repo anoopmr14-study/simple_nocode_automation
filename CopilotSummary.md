@@ -273,7 +273,7 @@ During Replay of insert Object, it is not able to find the object in the screen
 
 ## 3️⃣ Workflow System (NEW)
 
-### Action Model (`action.py`)
+### Action Model (`action.py`)   - DONE
 
 ```python
 Action(
@@ -284,7 +284,7 @@ Action(
 )
 ```
 
-### Workflow Manager (`workflow_manager.py`)
+### Workflow Manager (`workflow_manager.py`) - DONE
 
 * add_action
 * delete_action
@@ -300,17 +300,18 @@ professional Step Editor UI (like real automation tools)
 Allow user to:
 
 ```text
-Add Step
-Edit Step
-Select action type
-Select object (dropdown)
-Enter coordinates
-Enter text
+Add / Edit / Delete step
+Dropdown: action type
+Object selector (from repo)
+Input: x, y, text, delay
 ```
+---
+## 2️⃣Object Dropdown Selector (UI)
 
+Prevent manual typing errors.
 ---
 
-## 2️⃣ Object-Based Actions in Player
+## 3️⃣ Object-Based Actions in Player
 
 Extend ActionPlayer:
 
@@ -319,12 +320,6 @@ Click Object
 Validate Object
 Wait For Object
 ```
-
----
-
-## 3️⃣ Object Dropdown Selector (UI)
-
-Prevent manual typing errors.
 
 ---
 
@@ -338,9 +333,26 @@ Prevent manual typing errors.
 
 ## 5️⃣ Advanced Vision (Future)
 
-* Region-based search
+* Region-based search (use saved x,y,w,h)
 * Multi-match handling
 * Adaptive confidence
+     👉 Fix “object not found” issue
+
+---
+## 6️⃣ Workflow Features
+Step reorder (UI buttons)
+Duplicate step
+Enable/Disable step
+
+---
+## 7️⃣ Debug Mode
+Highlight found object
+Show confidence
+👉 Easy troubleshooting
+
+---
+## 8️⃣ Export / Import
+Share workflows easily
 
 ---
 
