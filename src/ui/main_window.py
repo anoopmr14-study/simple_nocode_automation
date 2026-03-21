@@ -125,11 +125,6 @@ class MainWindow(QMainWindow):
         # show UI again
         self.show()
 
-        # self.step_list.clear()
-
-        # for action in self.recorder.actions:
-        #     self.step_list.addItem(action)   
-
     # -------------------------------------------------
     # Stop Recording - callback from recorder when recording is stopped to update UI
     # -------------------------------------------------

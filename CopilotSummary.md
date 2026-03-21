@@ -294,7 +294,7 @@ Action(
 UI is **only a view**, not storage.
 
 
-## 1️⃣ Step Editor Dialog (VERY IMPORTANT)
+## 1️⃣ Step Editor Dialog (VERY IMPORTANT)     - DONE
 professional Step Editor UI (like real automation tools)
 
 Allow user to:
@@ -306,7 +306,7 @@ Object selector (from repo)
 Input: x, y, text, delay
 ```
 ---
-## 2️⃣Object Dropdown Selector (UI)
+## 2️⃣Object Dropdown Selector (UI)            - DONE
 
 Prevent manual typing errors.
 ---
@@ -355,7 +355,13 @@ Show confidence
 Share workflows easily
 
 ---
-
+## 7️⃣ Additional
+Delete All/Clear All button in Main UI
+Arrange UI such that Different buttons in better groups
+Define Enumeration for Action Type and Consistency
+Editor dialog fields should be show based on the action type and lable should show the sample data
+Editor dialog has Result label to show the Action based on the selection
+---
 # 🧩 Design Principles (STRICT)
 
 ✔ Modular classes

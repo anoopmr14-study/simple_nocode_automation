@@ -40,8 +40,8 @@ class StepEditorDialog(QDialog):
         layout.addWidget(QLabel("Action Type"))
         self.action_type = QComboBox()
         self.action_type.addItems([
-            "click", "right_click", "double_click",
-            "object_click", "type", "wait"
+            "Mouse Move", "Click Object" "Click", "Right Click", "Double Click",
+            "Type", "Hotkey", "Key" "Wait"
         ])
         layout.addWidget(self.action_type)
 
@@ -51,10 +51,11 @@ class StepEditorDialog(QDialog):
         layout.addWidget(self.object_dropdown)
 
         # Coordinates
-        layout.addWidget(QLabel("X, Y"))
+        layout.addWidget(QLabel("Co-oridnate: X"))
         self.x_input = QLineEdit()
-        self.y_input = QLineEdit()
         layout.addWidget(self.x_input)
+        layout.addWidget(QLabel("Co-oridnate: Y"))
+        self.y_input = QLineEdit()
         layout.addWidget(self.y_input)
 
         # Text

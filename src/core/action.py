@@ -60,19 +60,35 @@ class Action:
     # String representation (for UI)
     # -------------------------------
     def __str__(self):
-        if self.action_type == "click":
-            if self.target:
-                return f"Click [{self.target}] (fallback: {self.x},{self.y})"
-            return f"Click ({self.x},{self.y})"
 
-        elif self.action_type == "type":
-            return f"Type '{self.text}'"
+        if self.action_type in ["mouse_move", "MOUSE MOVE"]:
+            return f"Mouse Move ({self.x}, {self.y})"
+        
+        if self.action_type in ["object_click", "Click Object"]:
+            return f"Click Object  '{self.target}'"
+        
+        if self.action_type in ["click", "Click"]:
+            return f"Click  ({self.x}, {self.y})"
 
-        elif self.action_type == "wait":
-            return f"Wait {self.delay}s"
+        if self.action_type in ["right_click", "Right Click"]:
+            return f"Right Click  ({self.x}, {self.y})"
 
-        return f"{self.action_type}"
-    
+        if self.action_type in ["double_click", "Double Click"]:
+            return f"Double Click  ({self.x}, {self.y})"
+
+        if self.action_type in ["type", "Type"]:
+            return f"Type  '{self.text}'"
+        
+        if self.action_type in  ["hotkey", "Hotkey"]:
+            return f"Hotkey  '{self.text}'"
+        
+        if self.action_type in  ["key", "Key"]:
+            return f"Key  '{self.text}'"
+
+        if self.action_type in ["wait", "Wait"]:
+            return f"Wait  {self.delay}s"
+
+        return self.action_type
 
 # -------------------------------
 # Independent Test

@@ -59,60 +59,62 @@ class ActionPlayer:
         # -----------------------------
         # Wait
         # -----------------------------
-        if action.action_type == "wait":
+        if action.action_type in ["wait", "Wait"]:
             time.sleep(action.delay / self.speed)
 
         # -----------------------------
         # Mouse Move
         # -----------------------------
-        elif action.action_type == "mouse_move":
+        elif action.action_type in ["mouse_move", "MOUSE MOVE"]:
             pyautogui.moveTo(action.x, action.y)
+
+        # -----------------------------
+        # Click Object with SmartClickExecutor (with retry and timeout)
+        # -----------------------------
+        elif action.action_type in ["object_click", "Click Object"]:
+                self.smart_click.click_object(
+                    action.target,
+                    action.x,
+                    action.y
+                )   
 
         # -----------------------------
         # Mouse Left Click
         # -----------------------------
-        elif action.action_type == "click":
+        elif action.action_type in ["click", "Click"]:
             pyautogui.click(action.x, action.y)
 
         # -----------------------------
         # Mouse Right Click
         # -----------------------------
-        elif action.action_type == "right_click":
+        elif action.action_type in ["right_click", "Right Click"]:
             pyautogui.rightClick(action.x, action.y)
 
         # -----------------------------
         # Mouse Double Click
         # -----------------------------
-        elif action.action_type == "double_click":
+        elif action.action_type in ["double_click", "Double Click"]:
             pyautogui.doubleClick(action.x, action.y)
 
-        # -----------------------------
-        # Click Object with SmartClickExecutor (with retry and timeout)
-        # -----------------------------
-        elif action.action_type == "object_click":
-                self.smart_click.click_object(
-                    action.target,
-                    action.x,
-                    action.y
-                )         
+      
 
         # -----------------------------
         # Type Text
         # -----------------------------
-        elif action.action_type == "type":
+        elif action.action_type in ["type", "Type"]:
             pyautogui.write(action.text)
 
         # -----------------------------
         # Hotkey
         # -----------------------------
-        elif action.action_type == "hotkey":
+        elif action.action_type in ["hotkey", "Hotkey"]:
             keys = action.text.split(" + ")
             pyautogui.hotkey(*[k.lower() for k in keys])
 
         # -----------------------------
         # Special Keys
         # -----------------------------
-        elif action.action_type == "key":
+        elif action.action_type in  ["key", "Key"]:
             pyautogui.press(action.text.lower())
 
         else:
