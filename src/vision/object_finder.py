@@ -13,6 +13,10 @@ Returns the center coordinates of detected object.
 import cv2
 import numpy as np
 import mss
+from PIL import Image
+
+from PySide6.QtCore import QRect
+from pyscreeze import screenshot
 
 from src.object_repo.object_manager import ObjectRepositoryManager
 
@@ -29,16 +33,29 @@ class ObjectFinder:
     # -------------------------------------------------
     # Capture current screen
     # -------------------------------------------------
-    def capture_screen(self):
-
+    def capture_screen(self, rect=None):
+        print(f"Object_finder::capture_screen() - Capturing screen with rect: {rect}")
         with mss.mss() as sct:
             monitor = sct.monitors[1]  # primary monitor
+            if rect is not None:
+                # monitor = {"left": rect.left(), "top": rect.top(), "width": rect.width(), "height": rect.height()}
+                # monitor = {"left": rect["left"], "top": rect["top"], "width": rect["width"], "height": rect["height"]}
+                monitor = rect
+
+            print(f"Object_finder::capture_screen() - Capturing screen with monitor settings: {monitor}")
             img = sct.grab(monitor)
 
+        #screen = np.array(img)
+        
+        img = Image.frombytes("RGB", img.size, img.rgb)
         screen = np.array(img)
 
         # convert BGRA -> BGR
         screen = cv2.cvtColor(screen, cv2.COLOR_BGRA2BGR)
+
+        # Sample for debugging
+        image_path = f"results//finder_sample.png"
+        Image.fromarray(screen).save(image_path)
 
         return screen
 
@@ -48,20 +65,40 @@ class ObjectFinder:
     def find_object(self, object_name, confidence=None):
 
         obj = self.repo.get_object(object_name)
+        print(f"Object_finder::find_object() - Looking for object: {object_name} in repository {obj}" )
 
         if not obj:
-            print(f"Object not found in repository: {object_name}")
+            print(f"Object_finder::find_object() - Object not found in repository: {object_name}")
             return None
 
         template = cv2.imread(obj["image"])
 
         if template is None:
-            print("Failed to load template image")
+            print(f"Object_finder::find_object() - Failed to load template image for object: {object_name} at path: {obj['image']}")
             return None
 
         # Capture current screen
         # FIXME:: Capture only specific region for better performance
-        current_screen = self.capture_screen()
+        rect = None
+        if None not in (obj["x"], obj["y"], obj["w"], obj["h"]):
+
+            pad = 20  # important for matching
+
+            rect = {
+                "left": max(0, obj["x"]),
+                "top": max(0, obj["y"]),
+                "width": obj["w"] * 2,
+                "height": obj["h"] * 2
+            }
+            # rect = {
+            #     "left": max(0, obj["x"] - pad),
+            #     "top": max(0, obj["y"] - pad),
+            #     "width": obj["w"] + pad * 2,
+            #     "height": obj["h"] + pad * 2
+            # }
+        
+        current_screen = self.capture_screen(rect=rect)
+        print(f"Object_finder::find_object() - Screenshot taken for object {object_name} rect: {current_screen.shape}")
 
         # ✅ Convert to grayscale (IMPORTANT)
         current_screen_gray = cv2.cvtColor(current_screen, cv2.COLOR_BGR2GRAY)
@@ -77,7 +114,7 @@ class ObjectFinder:
         min_val, max_val, min_loc, max_loc = cv2.minMaxLoc(result)
         used_confidence = confidence if confidence else self.confidence
 
-        print(f"[DEBUG] Match confidence: {max_val}")
+        print(f"Object_finder::find_object() - Match confidence: {max_val}")
 
         if max_val < used_confidence:
             return None

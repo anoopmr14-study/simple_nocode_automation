@@ -360,7 +360,10 @@ Delete All/Clear All button in Main UI
 Arrange UI such that Different buttons in better groups
 Define Enumeration for Action Type and Consistency
 Editor dialog fields should be show based on the action type and lable should show the sample data
+Step Editor Dialog issue fixes including Show/Hide, data clearing issues etc for better usability
+Edit should automatically select the corresponding action
 Editor dialog has Result label to show the Action based on the selection
+Singleton usage of Repo in different classes
 ---
 # 🧩 Design Principles (STRICT)
 

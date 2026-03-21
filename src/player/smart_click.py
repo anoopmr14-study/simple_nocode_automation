@@ -54,7 +54,7 @@ class SmartClickExecutor:
             if location:
                 x, y = location
 
-                print(f"Object '{object_name}' found at {x},{y}")
+                print(f"smart_click::click_object() - Object '{object_name}' found at {x},{y}")
 
                 pyautogui.moveTo(x, y)
                 pyautogui.click()

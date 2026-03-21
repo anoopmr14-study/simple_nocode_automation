@@ -72,9 +72,7 @@ class ActionPlayer:
         # Click Object with SmartClickExecutor (with retry and timeout)
         # -----------------------------
         elif action.action_type in ["object_click", "Click Object"]:
-                self.smart_click.click_object(
-                    action
-                )   
+            self.smart_click.click_object( action)   
 
         # -----------------------------
         # Mouse Left Click
