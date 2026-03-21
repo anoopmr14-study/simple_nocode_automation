@@ -40,8 +40,8 @@ class StepEditorDialog(QDialog):
         layout.addWidget(QLabel("Action Type"))
         self.action_type = QComboBox()
         self.action_type.addItems([
-            "Mouse Move", "Click Object" "Click", "Right Click", "Double Click",
-            "Type", "Hotkey", "Key" "Wait"
+            "Mouse Move", "Click Object", "Click", "Right Click", "Double Click",
+            "Type", "Hotkey", "Key", "Wait"
         ])
         layout.addWidget(self.action_type)
 
@@ -82,6 +82,8 @@ class StepEditorDialog(QDialog):
         # events
         self.save_btn.clicked.connect(self.save_action)
         self.cancel_btn.clicked.connect(self.reject)
+        self.action_type.currentTextChanged.connect(self.update_fields)
+        self.update_fields()
 
     # -------------------------------------------------
     # Load objects from repository to dropdown
@@ -124,7 +126,7 @@ class StepEditorDialog(QDialog):
         delay = float(self.delay_input.text()) if self.delay_input.text() else 0.0
 
         target = None
-        if action_type == "object_click":
+        if action_type in ["object_click", "Click Object"]:
             target = self.object_dropdown.currentText()
 
         self.result_action = Action(
@@ -143,3 +145,30 @@ class StepEditorDialog(QDialog):
     # -------------------------------------------------
     def get_action(self):
         return getattr(self, "result_action", None)
+
+    # -------------------------------------------------
+    # Update enabled/disabled fields based on selected action type
+    # -------------------------------------------------  
+    def update_fields(self):
+        action_type = self.action_type.currentText()
+
+        # Reset all
+        self.object_dropdown.setEnabled(False)
+        self.x_input.setEnabled(False)
+        self.y_input.setEnabled(False)
+        self.text_input.setEnabled(False)
+        self.delay_input.setEnabled(False)
+
+        if action_type in ["object_click", "Click Object"]:
+            self.object_dropdown.setEnabled(True)
+
+        elif action_type in ["mouse_move", "Mouse Move", "click", "Click", "right_click", "Right Click", "double_click", "Double Click"]:
+            self.x_input.setEnabled(True)
+            self.y_input.setEnabled(True)
+
+
+        elif action_type in ["type", "Type", "hotkey", "Hotkey", "key", "Key"]:
+            self.text_input.setEnabled(True)
+
+        elif action_type in ["wait", "Wait"]:
+            self.delay_input.setEnabled(True)

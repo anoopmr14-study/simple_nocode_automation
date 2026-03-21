@@ -25,9 +25,9 @@ class SmartClickExecutor:
     # -------------------------------------------------
     def click_object(
         self,
-        object_name,
-        fallback_x=None,
-        fallback_y=None,
+        action,
+        override_x=None,
+        override_y=None,
         timeout=20,
         retry_interval=0.5,
         confidence=0.75
@@ -40,6 +40,11 @@ class SmartClickExecutor:
         If not found and fallback coordinates exist,
         click fallback position.
         """
+        object_name = action.target
+        if override_x is None or override_y is None:
+            override_x = action.x
+            override_y = action.y
+
         start_time = time.time()
 
         while time.time() - start_time < timeout:
@@ -58,9 +63,9 @@ class SmartClickExecutor:
             time.sleep(retry_interval)
 
         # fallback coordinate click
-        if fallback_x is not None and fallback_y is not None:
-            print(f"Fallback click at {fallback_x},{fallback_y}")
-            pyautogui.moveTo(fallback_x, fallback_y)
+        if override_x is not None and override_y is not None:
+            print(f"Fallback click at {override_x},{override_y}")
+            pyautogui.moveTo(override_x, override_y)
             pyautogui.click()
             return True
 
