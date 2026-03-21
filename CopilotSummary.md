@@ -356,6 +356,8 @@ Share workflows easily
 
 ---
 ## 7️⃣ Additional
+Use OCR for text comparison inaddition to screenshot comparison
+Improve the logic of Image Comparison to ensure it has more comparison
 Delete All/Clear All button in Main UI
 Arrange UI such that Different buttons in better groups
 Define Enumeration for Action Type and Consistency

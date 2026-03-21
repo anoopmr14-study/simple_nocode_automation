@@ -23,7 +23,7 @@ from src.object_repo.object_manager import ObjectRepositoryManager
 
 class ObjectFinder:
 
-    def __init__(self, confidence=0.8):
+    def __init__(self, confidence=0.5):
 
         # minimum match confidence
         self.confidence = confidence
@@ -87,8 +87,8 @@ class ObjectFinder:
             rect = {
                 "left": max(0, obj["x"]),
                 "top": max(0, obj["y"]),
-                "width": obj["w"] * 2,
-                "height": obj["h"] * 2
+                "width": obj["w"],
+                "height": obj["h"]
             }
             # rect = {
             #     "left": max(0, obj["x"] - pad),

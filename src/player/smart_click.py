@@ -30,7 +30,7 @@ class SmartClickExecutor:
         override_y=None,
         timeout=20,
         retry_interval=0.5,
-        confidence=0.75
+        confidence=0.5
     ):
 
         """
