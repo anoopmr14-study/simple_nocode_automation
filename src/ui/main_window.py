@@ -51,6 +51,10 @@ class MainWindow(QMainWindow):
 
         self.record_btn = QPushButton("Record")
         self.add_step_btn = QPushButton("Add Step")
+        self.delete_btn = QPushButton("Delete")
+        self.up_btn = QPushButton("Up")
+        self.down_btn = QPushButton("Down")
+        self.dup_btn = QPushButton("Duplicate")
         self.insert_obj_btn = QPushButton("Insert Object")
         self.play_btn = QPushButton("Play")
         self.load_btn = QPushButton("Load")
@@ -58,6 +62,10 @@ class MainWindow(QMainWindow):
 
         button_layout.addWidget(self.record_btn)
         button_layout.addWidget(self.add_step_btn)
+        button_layout.addWidget(self.delete_btn)
+        button_layout.addWidget(self.up_btn)
+        button_layout.addWidget(self.down_btn)
+        button_layout.addWidget(self.dup_btn)
         button_layout.addWidget(self.insert_obj_btn)
         button_layout.addWidget(self.play_btn)
         button_layout.addWidget(self.load_btn)
@@ -80,10 +88,15 @@ class MainWindow(QMainWindow):
         # -----------------------------
         self.record_btn.clicked.connect(self.start_recording)
         self.add_step_btn.clicked.connect(self.open_step_editor)
+        self.delete_btn.clicked.connect(self.delete_step)
+        self.up_btn.clicked.connect(self.move_up)
+        self.down_btn.clicked.connect(self.move_down)
+        self.dup_btn.clicked.connect(self.duplicate_step)
         self.insert_obj_btn.clicked.connect(self.capture_object)
         self.play_btn.clicked.connect(self.play_workflow)
         self.load_btn.clicked.connect(self.load_file)
         self.save_btn.clicked.connect(self.save_file)
+        self.step_list.itemDoubleClicked.connect(self.edit_step)
 
     # -------------------------------------------------
     # Start Recording in thread to avoid blocking UI
@@ -151,6 +164,55 @@ class MainWindow(QMainWindow):
                 self.workflow.add_action(action)
                 self.refresh_workflow_list()
 
+    # -------------------------------------------------
+    # Edit Step - open step editor dialog with existing action data for editing
+    # -------------------------------------------------
+    def edit_step(self, item):
+        index = self.step_list.row(item)
+        action = self.workflow.get_actions()[index]
+
+        dialog = StepEditorDialog(self, action)
+        if dialog.exec():
+            self.workflow.actions[index] = dialog.get_action()
+            self.refresh_workflow_list()
+
+    # -------------------------------------------------
+    # Delete Step - removes selected step from workflow and updates UI
+    # -------------------------------------------------
+    def delete_step(self):
+        index = self.step_list.currentRow()
+        if index >= 0:
+            self.workflow.delete_action(index)
+            self.refresh_workflow_list()
+
+    # -------------------------------------------------
+    # Move Up - moves selected step up in workflow and updates UI
+    # -------------------------------------------------
+    def move_up(self):
+        i = self.step_list.currentRow()
+        self.workflow.move_up(i)
+        self.refresh_workflow_list()
+        self.step_list.setCurrentRow(max(0, i - 1))
+
+    # -------------------------------------------------
+    # Move Down - moves selected step down in workflow and updates UI
+    # -------------------------------------------------
+    def move_down(self):
+        i = self.step_list.currentRow()
+        self.workflow.move_down(i)
+        self.refresh_workflow_list()
+        self.step_list.setCurrentRow(i + 1)
+
+    # -------------------------------------------------
+    # Duplicate Step - creates a copy of the selected step in the workflow and updates UI
+    # -------------------------------------------------
+    def duplicate_step(self):
+        from copy import deepcopy
+        i = self.step_list.currentRow()
+        if i >= 0:
+            action = self.workflow.get_actions()[i]
+            self.workflow.actions.insert(i + 1, deepcopy(action))
+            self.refresh_workflow_list()
 
     # -------------------------------------------------
     # Capture Object using Snipping Tool
