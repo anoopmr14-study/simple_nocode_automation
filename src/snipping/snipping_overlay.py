@@ -86,13 +86,21 @@ class SnippingOverlayWindow(QWidget):
 
     # Capture using MSS
     def capture(self, rect):
-        x = rect.left()
-        y = rect.top()
-        w = rect.width()
-        h = rect.height()
+        screen = QApplication.primaryScreen()
+        dpr = screen.devicePixelRatio()
+
+        x = int(rect.left() * dpr)
+        y = int(rect.top() * dpr)
+        w = int(rect.width() * dpr)
+        h = int(rect.height() * dpr)
 
         with mss.mss() as sct:
-            monitor = {"left": x, "top": y, "width": w, "height": h}
+            monitor = {
+                "left": x,
+                "top": y,
+                "width": w,
+                "height": h
+            }
             img = sct.grab(monitor)
 
         img = Image.frombytes("RGB", img.size, img.rgb)

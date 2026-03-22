@@ -82,20 +82,12 @@ class ObjectFinder:
         rect = None
         if None not in (obj["x"], obj["y"], obj["w"], obj["h"]):
 
-            pad = 20  # important for matching
-
             rect = {
-                "left": max(0, obj["x"]),
-                "top": max(0, obj["y"]),
-                "width": obj["w"],
-                "height": obj["h"]
-            }
-            # rect = {
-            #     "left": max(0, obj["x"] - pad),
-            #     "top": max(0, obj["y"] - pad),
-            #     "width": obj["w"] + pad * 2,
-            #     "height": obj["h"] + pad * 2
-            # }
+                "left": int(obj["x"]),
+                "top": int(obj["y"]),
+                "width": int(obj["w"]),
+                "height": int(obj["h"])
+}
         
         current_screen = self.capture_screen(rect=rect)
         print(f"Object_finder::find_object() - Screenshot taken for object {object_name} rect: {current_screen.shape}")
