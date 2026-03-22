@@ -11,6 +11,9 @@ from src.snipping import SnippingOverlayWindow, SnipPopup
 from src.object_repo import ObjectRepositoryManager
 from src.core import WorkflowManager
 from src.core import Action
+from src.report import ExecutionReport
+from src.report import ExecutionStepResult
+from src.report import ExecutionTracker
 
 
 __all__ = [
@@ -21,5 +24,8 @@ __all__ = [
     'SnipPopup', 
     'ObjectRepositoryManager',
     'WorkflowManager',
-    'Action'
+    'Action',
+    'ExecutionReport',
+    'ExecutionStepResult',
+    'ExecutionTracker'
 ]

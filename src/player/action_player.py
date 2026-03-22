@@ -7,6 +7,7 @@ Reads recorded automation file and executes actions.
 import time
 import pyautogui
 from pynput import keyboard
+from src.report.execution_tracker import ExecutionTracker
 from src.core.action import Action
 from src.player.smart_click import SmartClickExecutor
 
@@ -22,6 +23,7 @@ class ActionPlayer:
         self.running = False
         self.stop_listener = None
         self.smart_click = SmartClickExecutor()
+        self.tracker = ExecutionTracker()
 
     def start_stop_listener(self):
         """Start hotkey listener to stop automation"""
@@ -40,17 +42,36 @@ class ActionPlayer:
     # -------------------------------------------------
     def play(self):
         print("Starting automation...")
+         
+        # Result tracker
+        self.tracker.start_run()
 
         self.running = True
         self.start_stop_listener()
 
-        for action in self.actions:
+        for index, action in enumerate(self.actions):
             if not self.running:
                 break
 
-            print("Executing:", action)
-            self.execute_action(action)
+            result = self.tracker.start_step(index, action)
+            try:
+                print("Executing:", action)
+                self.execute_action(action)
 
+                result.mark_success()
+
+            except Exception as e:
+                result.mark_failed(str(e))
+
+                # Stop execution on failure (configurable later)
+                self.tracker.end_step(result)
+                break
+
+            self.tracker.end_step(result)
+
+        self.tracker.end_run()
+
+        return self.tracker.report
 
     # -------------------------------------------------
     # Execute Action

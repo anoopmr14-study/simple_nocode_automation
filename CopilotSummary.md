@@ -358,6 +358,11 @@ Share workflows easily
 ---
 ## 7️⃣ Additional
 
+- Play
+     - On Selection of different option in Play
+          - Show overlay with Rect around the click or mouse area but not in the screenshots
+          - Show the name of the object or co-ordinates
+
 - Object Comparison
      - Use OCR for text comparison inaddition to screenshot comparison
      - Improve the logic of Image Comparison to ensure it has more comparison
@@ -375,7 +380,8 @@ Share workflows easily
 - General
      - Define Enumeration for Action Type and Consistency
      - Singleton usage of Repo in different classes
-     - Each Step Success or Failure and Report Generation with failure details in some standard logger
+     - Each Step Success or Failure and Report Generation with failure details in some standard logger - DONE
+     - STEP EXECUTION Status in UI
 
 ---
 # 🧩 Design Principles (STRICT)

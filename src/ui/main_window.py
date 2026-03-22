@@ -3,6 +3,7 @@ Main Workflow Editor UI
 """
 
 import sys
+import json
 import threading
 from PySide6.QtWidgets import (
     QApplication, QMainWindow, QWidget,
@@ -315,12 +316,38 @@ class MainWindow(QMainWindow):
     # -------------------------------------------------
     def run_playback(self):
         player = ActionPlayer(self.workflow.get_actions())
-        player.play()
+        report = player.play()
+
+        # Generate report and log the summary
+        self.save_report(report)    
 
         # show UI when playback finishes
         self.show()
         # from PySide6.QtCore import QTimer
         # QTimer.singleShot(0, self.show)
+
+    # -------------------------------------------------
+    # Save the Report
+    # -------------------------------------------------
+    def save_report(self, report, path="results/report.json"):
+        data = []
+
+        print("\n=== EXECUTION REPORT ===")
+        for r in report.results:
+            print(f"{r.step_index} | {r.action_type} | {r.status} | {r.duration}s | {r.message}")
+            data.append({
+                "step": r.step_index,
+                "action": r.action_type,
+                "target": r.target,
+                "status": r.status,
+                "duration": r.duration,
+                "message": r.message
+            })
+
+        with open(path, "w") as f:
+            json.dump(data, f, indent=4)
+
+        print("\nSUMMARY:", report.summary())
 
     # ------------------------------------ LOAD  -------------------------------------------------#
     # -------------------------------------------------
