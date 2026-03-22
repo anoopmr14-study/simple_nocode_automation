@@ -1,0 +1,90 @@
+[
+    {
+        "step": 0,
+        "action": "Wait",
+        "target": null,
+        "status": "SUCCESS",
+        "duration": 2.005,
+        "message": ""
+    },
+    {
+        "step": 1,
+        "action": "Hotkey",
+        "target": null,
+        "status": "SUCCESS",
+        "duration": 0.112,
+        "message": ""
+    },
+    {
+        "step": 2,
+        "action": "Wait",
+        "target": null,
+        "status": "SUCCESS",
+        "duration": 3.016,
+        "message": ""
+    },
+    {
+        "step": 3,
+        "action": "Type",
+        "target": null,
+        "status": "SUCCESS",
+        "duration": 0.113,
+        "message": ""
+    },
+    {
+        "step": 4,
+        "action": "Wait",
+        "target": null,
+        "status": "SUCCESS",
+        "duration": 3.013,
+        "message": ""
+    },
+    {
+        "step": 5,
+        "action": "Click Object",
+        "target": "Plugins",
+        "status": "SUCCESS",
+        "duration": 0.24,
+        "message": ""
+    },
+    {
+        "step": 6,
+        "action": "Wait",
+        "target": null,
+        "status": "SUCCESS",
+        "duration": 5.011,
+        "message": ""
+    },
+    {
+        "step": 7,
+        "action": "Key",
+        "target": null,
+        "status": "SUCCESS",
+        "duration": 0.111,
+        "message": ""
+    },
+    {
+        "step": 8,
+        "action": "Wait",
+        "target": null,
+        "status": "SUCCESS",
+        "duration": 2.015,
+        "message": ""
+    },
+    {
+        "step": 9,
+        "action": "Click Object",
+        "target": "Window",
+        "status": "SUCCESS",
+        "duration": 0.242,
+        "message": ""
+    },
+    {
+        "step": 10,
+        "action": "Wait",
+        "target": null,
+        "status": "SUCCESS",
+        "duration": 5.013,
+        "message": ""
+    }
+]

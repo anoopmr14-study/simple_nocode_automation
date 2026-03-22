@@ -1,0 +1,42 @@
+[
+    {
+        "action_type": "Validate Object",
+        "target": "File",
+        "x": 2,
+        "y": 24,
+        "w": 31,
+        "h": 23,
+        "text": null,
+        "delay": 0.0
+    },
+    {
+        "action_type": "Validate Object",
+        "target": "File",
+        "x": 2,
+        "y": 24,
+        "w": 31,
+        "h": 23,
+        "text": null,
+        "delay": 0.0
+    },
+    {
+        "action_type": "Wait Object",
+        "target": "File",
+        "x": 2,
+        "y": 24,
+        "w": 31,
+        "h": 23,
+        "text": null,
+        "delay": 6.0
+    },
+    {
+        "action_type": "Click Object",
+        "target": "File",
+        "x": 2,
+        "y": 24,
+        "w": 31,
+        "h": 23,
+        "text": null,
+        "delay": 0.0
+    }
+]

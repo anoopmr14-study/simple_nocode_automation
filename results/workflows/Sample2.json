@@ -1,0 +1,112 @@
+[
+    {
+        "action_type": "Wait",
+        "target": null,
+        "x": null,
+        "y": null,
+        "w": null,
+        "h": null,
+        "text": null,
+        "delay": 2.0
+    },
+    {
+        "action_type": "Hotkey",
+        "target": null,
+        "x": null,
+        "y": null,
+        "w": null,
+        "h": null,
+        "text": "Ctrl + N",
+        "delay": 0.0
+    },
+    {
+        "action_type": "Wait",
+        "target": null,
+        "x": null,
+        "y": null,
+        "w": null,
+        "h": null,
+        "text": null,
+        "delay": 3.0
+    },
+    {
+        "action_type": "Type",
+        "target": null,
+        "x": null,
+        "y": null,
+        "w": null,
+        "h": null,
+        "text": "TEST",
+        "delay": 0.0
+    },
+    {
+        "action_type": "Wait",
+        "target": null,
+        "x": null,
+        "y": null,
+        "w": null,
+        "h": null,
+        "text": null,
+        "delay": 3.0
+    },
+    {
+        "action_type": "Click Object",
+        "target": "Plugins",
+        "x": 470,
+        "y": 21,
+        "w": 54,
+        "h": 22,
+        "text": null,
+        "delay": 0.0
+    },
+    {
+        "action_type": "Wait",
+        "target": null,
+        "x": null,
+        "y": null,
+        "w": null,
+        "h": null,
+        "text": null,
+        "delay": 5.0
+    },
+    {
+        "action_type": "Key",
+        "target": null,
+        "x": null,
+        "y": null,
+        "w": null,
+        "h": null,
+        "text": "ESC",
+        "delay": 0.0
+    },
+    {
+        "action_type": "Wait",
+        "target": null,
+        "x": null,
+        "y": null,
+        "w": null,
+        "h": null,
+        "text": null,
+        "delay": 2.0
+    },
+    {
+        "action_type": "Click Object",
+        "target": "Window",
+        "x": 523,
+        "y": 18,
+        "w": 61,
+        "h": 29,
+        "text": null,
+        "delay": 0.0
+    },
+    {
+        "action_type": "Wait",
+        "target": null,
+        "x": null,
+        "y": null,
+        "w": null,
+        "h": null,
+        "text": null,
+        "delay": 5.0
+    }
+]

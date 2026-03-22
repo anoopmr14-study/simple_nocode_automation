@@ -10,6 +10,8 @@ Uses:
 Returns the center coordinates of detected object.
 """
 
+import os
+
 import cv2
 import numpy as np
 import mss
@@ -53,7 +55,10 @@ class ObjectFinder:
         # screen = screen[:, :, :3]  # ensure 3 channels
 
         # Sample for debugging
-        image_path = f"results//Object_finder_sample_{datetime.now().strftime('%Y%m%d_%H%M%S')}.png"
+        object_finder_temp_dir = "results/object_finder_temp"
+        os.makedirs(object_finder_temp_dir, exist_ok=True)
+        image_path = f"{object_finder_temp_dir}/Object_finder_sample_{datetime.now().strftime('%Y%m%d_%H%M%S')}.png"
+
         Image.fromarray(screen).save(image_path)
         print(f"Object_finder::capture_screen() - Screen captured for {name} and saved to {image_path} with shape: {screen.shape}")        
 

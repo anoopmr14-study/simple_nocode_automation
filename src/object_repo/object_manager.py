@@ -20,7 +20,7 @@ from PIL import Image
 class ObjectRepositoryManager:
 
     def __init__(self,
-                 mapping_file="results/objectmapping.json",
+                 mapping_file="results/objects/objectmapping.json",
                  object_dir="results/objects"):
 
         self.mapping_file = mapping_file
@@ -55,7 +55,6 @@ class ObjectRepositoryManager:
     # Save JSON mapping file
     # ---------------------------------------------------
     def save_mapping(self):
-
         with open(self.mapping_file, "w") as f:
             json.dump(self.objects, f, indent=4)
 
@@ -123,7 +122,6 @@ class ObjectRepositoryManager:
     # List all objects
     # ---------------------------------------------------
     def list_objects(self):
-
         return list(self.objects.keys())
 
 

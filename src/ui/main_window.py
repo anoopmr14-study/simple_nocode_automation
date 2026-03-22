@@ -2,9 +2,12 @@
 Main Workflow Editor UI
 """
 
+import os
 import sys
 import json
 import threading
+from datetime import datetime
+
 from PySide6.QtWidgets import (
     QApplication, QMainWindow, QWidget,
     QVBoxLayout, QHBoxLayout,
@@ -329,10 +332,11 @@ class MainWindow(QMainWindow):
     # -------------------------------------------------
     # Save the Report
     # -------------------------------------------------
-    def save_report(self, report, path="results/report.json"):
+    def save_report(self, report, path="results/report/execution_report.json"):
         data = []
-
-        print("\n=== EXECUTION REPORT ===")
+        if path is None:
+            path = f"results/reports/execution_report_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json"
+        print(f"\n=== EXECUTION REPORT - {path} ===")
         for r in report.results:
             print(f"{r.step_index} | {r.action_type} | {r.status} | {r.duration}s | {r.message}")
             data.append({
@@ -355,10 +359,11 @@ class MainWindow(QMainWindow):
     # -------------------------------------------------
     def load_file(self):
 
+        default_dir = os.path.join(os.getcwd(), "results", "workflows")
         file_path, _ = QFileDialog.getOpenFileName(
             self,
             "Open Workflow",
-            "",
+            default_dir,
             "JSON Files (*.json)"
         )
 
@@ -373,11 +378,14 @@ class MainWindow(QMainWindow):
     # Save File
     # -------------------------------------------------
     def save_file(self):
-
+        default_dir = os.path.join(os.getcwd(), "results", "workflows")
+        os.makedirs(default_dir, exist_ok=True)
+        default_file = os.path.join(default_dir, "workflow.json")
+        
         file_path, _ = QFileDialog.getSaveFileName(
             self,
             "Save Workflow",
-            "workflow.json",
+            default_file,
             "JSON Files (*.json)"
         )
 

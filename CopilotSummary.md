@@ -364,6 +364,7 @@ Share workflows easily
           - Show the name of the object or co-ordinates
 
 - Object Comparison
+     - OCR for get the text or validate text
      - Use OCR for text comparison inaddition to screenshot comparison
      - Improve the logic of Image Comparison to ensure it has more comparison
      - Optimize object lookup and image comparison logic
@@ -378,6 +379,7 @@ Share workflows easily
      - Step Editor Dialog issue fixes including Show/Hide, data clearing issues etc for better usability
      
 - General
+     - Test in Linux and Configuration for Paths
      - Define Enumeration for Action Type and Consistency
      - Singleton usage of Repo in different classes
      - Each Step Success or Failure and Report Generation with failure details in some standard logger - DONE

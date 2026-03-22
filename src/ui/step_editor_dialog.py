@@ -21,7 +21,6 @@ class StepEditorDialog(QDialog):
         self.setMinimumWidth(300)
 
         self.repo = ObjectRepositoryManager()
-        #self.objects = self.repo.load_objects()
         self.action = action
 
         self.init_ui()

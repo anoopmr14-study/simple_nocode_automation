@@ -1,0 +1,26 @@
+{
+    "File": {
+        "name": "File",
+        "image": "results/objects\\File.png",
+        "x": 2,
+        "y": 24,
+        "w": 31,
+        "h": 23
+    },
+    "Plugins": {
+        "name": "Plugins",
+        "image": "results/objects\\Plugins.png",
+        "x": 470,
+        "y": 21,
+        "w": 54,
+        "h": 22
+    },
+    "Window": {
+        "name": "Window",
+        "image": "results/objects\\Window.png",
+        "x": 523,
+        "y": 18,
+        "w": 61,
+        "h": 29
+    }
+}

@@ -1,0 +1,112 @@
+[
+    {
+        "action_type": "Wait",
+        "target": null,
+        "x": null,
+        "y": null,
+        "w": null,
+        "h": null,
+        "text": null,
+        "delay": 5.0
+    },
+    {
+        "action_type": "mouse_move",
+        "target": null,
+        "x": 23,
+        "y": 39,
+        "w": null,
+        "h": null,
+        "text": null,
+        "delay": 0.0
+    },
+    {
+        "action_type": "click",
+        "target": null,
+        "x": 23,
+        "y": 39,
+        "w": null,
+        "h": null,
+        "text": null,
+        "delay": 0.0
+    },
+    {
+        "action_type": "wait",
+        "target": null,
+        "x": null,
+        "y": null,
+        "w": null,
+        "h": null,
+        "text": null,
+        "delay": 0.9
+    },
+    {
+        "action_type": "mouse_move",
+        "target": null,
+        "x": 68,
+        "y": 73,
+        "w": null,
+        "h": null,
+        "text": null,
+        "delay": 0.0
+    },
+    {
+        "action_type": "click",
+        "target": null,
+        "x": 68,
+        "y": 73,
+        "w": null,
+        "h": null,
+        "text": null,
+        "delay": 0.0
+    },
+    {
+        "action_type": "wait",
+        "target": null,
+        "x": null,
+        "y": null,
+        "w": null,
+        "h": null,
+        "text": null,
+        "delay": 0.93
+    },
+    {
+        "action_type": "Type",
+        "target": null,
+        "x": null,
+        "y": null,
+        "w": null,
+        "h": null,
+        "text": "ABCD",
+        "delay": 0.0
+    },
+    {
+        "action_type": "Wait",
+        "target": null,
+        "x": null,
+        "y": null,
+        "w": null,
+        "h": null,
+        "text": null,
+        "delay": 2.0
+    },
+    {
+        "action_type": "Click Object",
+        "target": "File",
+        "x": 0,
+        "y": 23,
+        "w": 39,
+        "h": 24,
+        "text": null,
+        "delay": 0.0
+    },
+    {
+        "action_type": "Wait",
+        "target": null,
+        "x": null,
+        "y": null,
+        "w": null,
+        "h": null,
+        "text": null,
+        "delay": 5.0
+    }
+]

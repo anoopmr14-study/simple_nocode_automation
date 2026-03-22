@@ -9,7 +9,7 @@ import pyautogui
 from pynput import keyboard
 from src.report.execution_tracker import ExecutionTracker
 from src.core.action import Action
-from src.player.smart_click import SmartClickExecutor
+from src.player.smart_object_player import SmartObjectPlayer
 
 
 pyautogui.FAILSAFE = True
@@ -22,7 +22,7 @@ class ActionPlayer:
         self.speed = 1.0   # 1 = normal, 2 = 2x faster, 0.5 = slower
         self.running = False
         self.stop_listener = None
-        self.smart_click = SmartClickExecutor()
+        self.smart_object_player = SmartObjectPlayer()
         self.tracker = ExecutionTracker()
 
     def start_stop_listener(self):
@@ -90,13 +90,16 @@ class ActionPlayer:
             pyautogui.moveTo(action.x, action.y)
 
         # -----------------------------
-        # Click Object with SmartClickExecutor (with retry and timeout)
+        # Click Object (with retry and timeout)
         # -----------------------------
         elif action.action_type in ["object_click", "Click Object"]:
-            self.smart_click.click_object( action)   
+            self.smart_object_player.click_object( action)   
 
+        # -----------------------------
+        # Validate Object
+        # -----------------------------
         elif action.action_type in ["validate_object", "Validate Object"]:
-            result = self.smart_click.validate_object(action)
+            result = self.smart_object_player.validate_object(action)
 
             if not result:
                 raise Exception(f"Validation failed: {action.target}")
@@ -105,7 +108,7 @@ class ActionPlayer:
         # Wait Object
         # -----------------------------
         elif action.action_type in ["wait_object", "Wait Object"]:
-            self.smart_click.wait_for_object(action)
+            self.smart_object_player.wait_for_object(action)
 
         # -----------------------------
         # Mouse Left Click
@@ -124,8 +127,6 @@ class ActionPlayer:
         # -----------------------------
         elif action.action_type in ["double_click", "Double Click"]:
             pyautogui.doubleClick(action.x, action.y)
-
-      
 
         # -----------------------------
         # Type Text
