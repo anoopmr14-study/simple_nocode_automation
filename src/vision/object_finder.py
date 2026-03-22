@@ -14,6 +14,7 @@ import cv2
 import numpy as np
 import mss
 from PIL import Image
+from datetime import datetime
 
 from PySide6.QtCore import QRect
 from PySide6.QtGui import QGuiApplication
@@ -34,7 +35,7 @@ class ObjectFinder:
     # -------------------------------------------------
     # Capture current screen
     # -------------------------------------------------
-    def capture_screen(self, rect=None):
+    def capture_screen(self, name=None, rect=None):
         print(f"Object_finder::capture_screen() - Capturing screen with rect: {rect}")
         with mss.mss() as sct:
             monitor = sct.monitors[1]  # primary monitor
@@ -47,14 +48,14 @@ class ObjectFinder:
         img = Image.frombytes("RGB", img.size, img.rgb)
         screen = np.array(img)
 
-        # convert RGB -> BGR
-        # screen = cv2.cvtColor(screen, cv2.COLOR_BGRA2BGR)
+        # convert RGB -> BGR for OpenCV
         screen = cv2.cvtColor(screen, cv2.COLOR_RGB2BGR)
         # screen = screen[:, :, :3]  # ensure 3 channels
 
         # Sample for debugging
-        image_path = f"results//finder_sample.png"
+        image_path = f"results//Object_finder_sample_{datetime.now().strftime('%Y%m%d_%H%M%S')}.png"
         Image.fromarray(screen).save(image_path)
+        print(f"Object_finder::capture_screen() - Screen captured for {name} and saved to {image_path} with shape: {screen.shape}")        
 
         return screen
 
@@ -76,8 +77,7 @@ class ObjectFinder:
             print(f"Object_finder::find_object() - Failed to load template image for object: {object_name} at path: {obj['image']}")
             return None
 
-        # Capture current screen
-        # FIXME:: Capture only specific region for better performance
+        # Capture current screen (or specific region if object has coordinates - optimization)
         rect = None
         if None not in (obj["x"], obj["y"], obj["w"], obj["h"]):
 
@@ -89,13 +89,13 @@ class ObjectFinder:
                 "top": int(obj["y"] * dpr),
                 "width": int(obj["w"] * dpr),
                 "height": int(obj["h"] * dpr),
-}
+            }
 
-        current_screen = self.capture_screen(rect=rect)
+        current_screen = self.capture_screen(name=object_name, rect=rect)
         print(f"Object_finder::find_object() - Screenshot taken for object {object_name} \
                 rect: {rect}  current screen shape: {current_screen.shape}")
 
-        # ✅ Convert to grayscale (IMPORTANT)
+        # Convert to grayscale (IMPORTANT)
         current_screen_gray = cv2.cvtColor(current_screen, cv2.COLOR_BGR2GRAY)
         template_gray = cv2.cvtColor(template, cv2.COLOR_BGR2GRAY)
 
@@ -115,9 +115,6 @@ class ObjectFinder:
             return None
 
         h, w = template.shape[:2]
-
-        # center_x = max_loc[0] + w // 2
-        # center_y = max_loc[1] + h // 2
         center_x = rect["left"] + rect["width"] // 2 if rect else max_loc[0] + w // 2
         center_y = rect["top"] + rect["height"] // 2 if rect else max_loc[1] + h // 2   
 
