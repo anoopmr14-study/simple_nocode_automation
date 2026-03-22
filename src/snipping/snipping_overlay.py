@@ -1,12 +1,14 @@
 import sys
 from PySide6.QtWidgets import QApplication, QWidget
 from PySide6.QtCore import Qt, QRect, QPoint, Signal
-from PySide6.QtGui import QPainter, QColor, QPen
+from PySide6.QtGui import QGuiApplication, QPainter, QColor, QPen
 import mss
 import numpy as np
 from PIL import Image
 
-#from .snipping_popup import SnipPopup
+QGuiApplication.setHighDpiScaleFactorRoundingPolicy(
+    Qt.HighDpiScaleFactorRoundingPolicy.PassThrough
+)
 
 class SnippingOverlayWindow(QWidget):
 
@@ -52,6 +54,8 @@ class SnippingOverlayWindow(QWidget):
             self.end = event.pos()
             self.dragging = False
             rect = QRect(self.start, self.end).normalized()
+
+            self.hide()
 
             self.capture(rect)
 

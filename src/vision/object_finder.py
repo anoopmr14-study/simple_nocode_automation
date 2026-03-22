@@ -16,6 +16,7 @@ import mss
 from PIL import Image
 
 from PySide6.QtCore import QRect
+from PySide6.QtGui import QGuiApplication
 from pyscreeze import screenshot
 
 from src.object_repo.object_manager import ObjectRepositoryManager
@@ -38,20 +39,18 @@ class ObjectFinder:
         with mss.mss() as sct:
             monitor = sct.monitors[1]  # primary monitor
             if rect is not None:
-                # monitor = {"left": rect.left(), "top": rect.top(), "width": rect.width(), "height": rect.height()}
-                # monitor = {"left": rect["left"], "top": rect["top"], "width": rect["width"], "height": rect["height"]}
                 monitor = rect
 
             print(f"Object_finder::capture_screen() - Capturing screen with monitor settings: {monitor}")
             img = sct.grab(monitor)
-
-        #screen = np.array(img)
         
         img = Image.frombytes("RGB", img.size, img.rgb)
         screen = np.array(img)
 
-        # convert BGRA -> BGR
-        screen = cv2.cvtColor(screen, cv2.COLOR_BGRA2BGR)
+        # convert RGB -> BGR
+        # screen = cv2.cvtColor(screen, cv2.COLOR_BGRA2BGR)
+        screen = cv2.cvtColor(screen, cv2.COLOR_RGB2BGR)
+        # screen = screen[:, :, :3]  # ensure 3 channels
 
         # Sample for debugging
         image_path = f"results//finder_sample.png"
@@ -82,13 +81,23 @@ class ObjectFinder:
         rect = None
         if None not in (obj["x"], obj["y"], obj["w"], obj["h"]):
 
+            # rect = {
+            #     "left": int(obj["x"]),
+            #     "top": int(obj["y"]),
+            #     "width": int(obj["w"]),
+            #     "height": int(obj["h"])
+            # }
+
+            screen = QGuiApplication.primaryScreen()
+            dpr = screen.devicePixelRatio()
+
             rect = {
-                "left": int(obj["x"]),
-                "top": int(obj["y"]),
-                "width": int(obj["w"]),
-                "height": int(obj["h"])
+                "left": int(obj["x"] * dpr),
+                "top": int(obj["y"] * dpr),
+                "width": int(obj["w"] * dpr),
+                "height": int(obj["h"] * dpr),
 }
-        
+
         current_screen = self.capture_screen(rect=rect)
         print(f"Object_finder::find_object() - Screenshot taken for object {object_name} rect: {current_screen.shape}")
 
