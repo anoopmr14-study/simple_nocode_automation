@@ -1,0 +1,63 @@
+## 🚀 Short Product Summary
+
+A **Python-based No-Code Desktop UI Automation Tool** that enables **non-technical users** to record, build, and execute workflows using **visual object detection instead of fragile coordinates**.
+
+---
+
+## ⭐ Key Highlights (vs Market Tools like UiPath)
+
+* **🧠 Hybrid Execution Engine**
+  Uses *object recognition (OpenCV)* + *fallback coordinates* → far more reliable than basic macro tools
+
+* **🎯 Visual Object-Based Automation**
+  Capture UI elements once → reuse across workflows (like real RPA)
+
+* **🔁 Smart Click Engine**
+  Auto-retry + timeout + fallback → reduces failure rate significantly
+
+* **🧩 Beginner-Friendly Design**
+  Clean UI, dropdowns, no coding required
+
+* **⚙️ Modular Architecture**
+  Recorder, Player, Vision, Workflow → easy to extend & maintain
+
+* **🖼️ Region-Based Image Detection**
+  Faster + more accurate object finding (optimized vs naive full-screen scan)
+
+* **🧪 Debuggable System**
+  Object validation, wait conditions, execution status
+
+---
+
+## ⚡ Core Features (Crisp)
+
+* Record mouse & keyboard actions
+* Capture UI elements via snipping tool
+* Build workflows with step editor
+* Execute with:
+
+  * Click Object
+  * Wait for Object
+  * Validate Object
+* Playback speed + stop hotkey
+* Object repository (JSON-based)
+* Smart retry & failure handling
+* Workflow step management (reorder, duplicate, delete)
+
+---
+
+## 🔮 Future Enhancements (Short)
+
+* 🔍 Advanced Vision (multi-match, adaptive confidence)
+* 🧠 OCR-based text validation (hybrid image + text matching)
+* 🧪 Debug Mode (highlight detection, confidence display)
+* 📦 Import / Export workflows
+* ▶️ Visual execution overlay (show clicks live)
+* 📊 Execution reporting & logs UI
+* 🔄 Cross-platform support (Linux ready)
+
+---
+
+## 🧠 One-Line Positioning
+
+> **“Lightweight, open-source RPA tool with smart visual automation — simpler than enterprise tools, but far more powerful than macro recorders.”**
