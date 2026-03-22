@@ -73,7 +73,7 @@ class Action:
             return f"Mouse Move ({self.x}, {self.y})"
         
         if self.action_type in ["object_click", "Click Object"]:
-            return f"Click Object  '{self.target}' with x: {self.x}, y: {self.y}, w: {self.w}, h: {self.h}"
+            return f"Click Object  '{self.target}'  (x: {self.x}, y: {self.y}, w: {self.w}, h: {self.h})"
         
         if self.action_type in ["click", "Click"]:
             return f"Click  ({self.x}, {self.y})"
@@ -95,6 +95,12 @@ class Action:
 
         if self.action_type in ["wait", "Wait"]:
             return f"Wait  {self.delay}s"
+        
+        if self.action_type in ["validate_object", "Validate Object"]:
+            return f"Validate Object '{self.target}'  (x: {self.x}, y: {self.y}, w: {self.w}, h: {self.h})"
+
+        if self.action_type in ["wait_Object", "Wait Object"]:
+            return f"Wait Object '{self.target}'  (x: {self.x}, y: {self.y}, w: {self.w}, h: {self.h}) with timeout {self.delay}s"
 
         return self.action_type
 

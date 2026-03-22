@@ -74,6 +74,18 @@ class ActionPlayer:
         elif action.action_type in ["object_click", "Click Object"]:
             self.smart_click.click_object( action)   
 
+        elif action.action_type in ["validate_object", "Validate Object"]:
+            result = self.smart_click.validate_object(action)
+
+            if not result:
+                raise Exception(f"Validation failed: {action.target}")
+
+        # -----------------------------
+        # Wait Object
+        # -----------------------------
+        elif action.action_type in ["wait_object", "Wait Object"]:
+            self.smart_click.wait_for_object(action)
+
         # -----------------------------
         # Mouse Left Click
         # -----------------------------

@@ -1,4 +1,4 @@
-Mar 21 2026
+Mar 22 2026
 ===========
 You are an experience Technical architect who knows multiple programs like java, python etc and expert to design and build complex systems in simple phase wise from scratch.
 
@@ -49,8 +49,8 @@ automation_tool
 src
 │
 ├── core
-│   ├── action.py (Planned but not implemented)
-│   └── workflow_manager.py (Planned but not implemented)
+│   ├── action.py
+│   └── workflow_manager.py
 │
 ├── recorder
 │   └── action_recorder.py
@@ -71,6 +71,7 @@ src
 │
 ├── ui
 │   └── main_window.py
+│   └── step_editor_dialog.py
 │
 main.py
 ```
@@ -316,9 +317,9 @@ Prevent manual typing errors.
 Extend ActionPlayer:
 
 ```text
-Click Object                                - DONE      
-Validate Object
-Wait For Object
+Click Object                                 - DONE      
+Validate Object                              - DONE 
+Wait For Object                              - DONE 
 ```
 
 ---
@@ -356,16 +357,26 @@ Share workflows easily
 
 ---
 ## 7️⃣ Additional
-Use OCR for text comparison inaddition to screenshot comparison
-Improve the logic of Image Comparison to ensure it has more comparison
-Delete All/Clear All button in Main UI
-Arrange UI such that Different buttons in better groups
-Define Enumeration for Action Type and Consistency
-Editor dialog fields should be show based on the action type and lable should show the sample data
-Step Editor Dialog issue fixes including Show/Hide, data clearing issues etc for better usability
-Edit should automatically select the corresponding action
-Editor dialog has Result label to show the Action based on the selection
-Singleton usage of Repo in different classes
+
+- Object Comparison
+     - Use OCR for text comparison inaddition to screenshot comparison
+     - Improve the logic of Image Comparison to ensure it has more comparison
+     - Optimize object lookup and image comparison logic
+
+- Main Window
+    - Delete All/Clear All button in Main UI - DONE
+    - Arrange UI such that Different buttons in better groups
+- Editor Dialog
+     - Edit should automatically select the corresponding action
+     - Editor dialog has Result label to show the Action based on the selection
+     - Editor dialog fields should be show based on the action type and lable should show the sample data
+     - Step Editor Dialog issue fixes including Show/Hide, data clearing issues etc for better usability
+     
+- General
+     - Define Enumeration for Action Type and Consistency
+     - Singleton usage of Repo in different classes
+     - Each Step Success or Failure and Report Generation with failure details in some standard logger
+
 ---
 # 🧩 Design Principles (STRICT)
 

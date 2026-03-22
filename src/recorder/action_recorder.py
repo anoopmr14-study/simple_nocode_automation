@@ -95,7 +95,6 @@ class ActionRecorder:
         if delay > 0.2:  # ignore very small delays
             action = Action(action_type="wait", delay=delay)
             self._emit(action)
-            #self.actions.append(f"Wait {delay}")
 
         self.last_event_time = current_time
 
@@ -125,7 +124,6 @@ class ActionRecorder:
             if self.last_mouse_position:
                 mx, my = self.last_mouse_position
                 self._emit(Action(action_type="mouse_move", x=mx, y=my))
-                # self.actions.append(f"Mouse Move {mx},{my}")
             else:
                 mx, my = x, y
 
@@ -133,15 +131,12 @@ class ActionRecorder:
 
             # Detect double click
             if current_time - self.last_click_time < self.double_click_threshold:
-                #self.actions.append("Mouse Double Click")
                 action = Action(action_type="double_click", x=mx, y=my)
             else:
                 if button == mouse.Button.left:
-                    #self.actions.append("Mouse Left Click")
                     action = Action(action_type="click", x=mx, y=my)
 
                 elif button == mouse.Button.right:
-                    #self.actions.append("Mouse Right Click")
                     action = Action(action_type="right_click", x=mx, y=my)
 
             self._emit(action)
@@ -191,11 +186,9 @@ class ActionRecorder:
                 if modifiers:
                     hotkey = " + ".join(modifiers + [char.upper()])
                     self._emit(Action(action_type="hotkey", text=hotkey))
-                    # self.actions.append(f"Hotkey {hotkey}")
                 else:
                     # Regular character typing
                     self._emit(Action(action_type="type", text=char))
-                    # self.actions.append(f"Type text {char}")               
 
         except AttributeError:
             # handle special keys
@@ -213,15 +206,12 @@ class ActionRecorder:
 
             if key == keyboard.Key.tab and self.alt_pressed:
                 self._emit(Action(action_type="hotkey", text="Alt + Tab"))
-                # self.actions.append("Hotkey Alt + Tab")
 
             elif key == keyboard.Key.enter:
                 self._emit(Action(action_type="key", text="Enter"))
-                # self.actions.append("Key Enter")
 
             elif key == keyboard.Key.backspace:
                 self._emit(Action(action_type="key", text="Backspace"))
-                # self.actions.append("Key Backspace")
 
     # -----------------------------------------------------
     # Keyboard Release
