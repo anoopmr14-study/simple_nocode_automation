@@ -332,7 +332,7 @@ class MainWindow(QMainWindow):
     # -------------------------------------------------
     # Save the Report
     # -------------------------------------------------
-    def save_report(self, report, path="results/report/execution_report.json"):
+    def save_report(self, report, path=None):
         data = []
         if path is None:
             path = f"results/reports/execution_report_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json"

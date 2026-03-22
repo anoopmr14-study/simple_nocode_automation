@@ -4,7 +4,7 @@
         "action": "Wait",
         "target": null,
         "status": "SUCCESS",
-        "duration": 2.005,
+        "duration": 2.002,
         "message": ""
     },
     {
@@ -12,7 +12,7 @@
         "action": "Hotkey",
         "target": null,
         "status": "SUCCESS",
-        "duration": 0.112,
+        "duration": 0.104,
         "message": ""
     },
     {
@@ -20,7 +20,7 @@
         "action": "Wait",
         "target": null,
         "status": "SUCCESS",
-        "duration": 3.016,
+        "duration": 3.008,
         "message": ""
     },
     {
@@ -28,7 +28,7 @@
         "action": "Type",
         "target": null,
         "status": "SUCCESS",
-        "duration": 0.113,
+        "duration": 0.127,
         "message": ""
     },
     {
@@ -36,7 +36,7 @@
         "action": "Wait",
         "target": null,
         "status": "SUCCESS",
-        "duration": 3.013,
+        "duration": 3.01,
         "message": ""
     },
     {
@@ -44,7 +44,7 @@
         "action": "Click Object",
         "target": "Plugins",
         "status": "SUCCESS",
-        "duration": 0.24,
+        "duration": 0.269,
         "message": ""
     },
     {
@@ -52,7 +52,7 @@
         "action": "Wait",
         "target": null,
         "status": "SUCCESS",
-        "duration": 5.011,
+        "duration": 5.015,
         "message": ""
     },
     {
@@ -60,7 +60,7 @@
         "action": "Key",
         "target": null,
         "status": "SUCCESS",
-        "duration": 0.111,
+        "duration": 0.105,
         "message": ""
     },
     {
@@ -68,7 +68,7 @@
         "action": "Wait",
         "target": null,
         "status": "SUCCESS",
-        "duration": 2.015,
+        "duration": 2.009,
         "message": ""
     },
     {
@@ -76,7 +76,7 @@
         "action": "Click Object",
         "target": "Window",
         "status": "SUCCESS",
-        "duration": 0.242,
+        "duration": 0.256,
         "message": ""
     },
     {
@@ -84,7 +84,7 @@
         "action": "Wait",
         "target": null,
         "status": "SUCCESS",
-        "duration": 5.013,
+        "duration": 5.007,
         "message": ""
     }
 ]
