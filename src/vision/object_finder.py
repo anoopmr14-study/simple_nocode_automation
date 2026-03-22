@@ -81,13 +81,6 @@ class ObjectFinder:
         rect = None
         if None not in (obj["x"], obj["y"], obj["w"], obj["h"]):
 
-            # rect = {
-            #     "left": int(obj["x"]),
-            #     "top": int(obj["y"]),
-            #     "width": int(obj["w"]),
-            #     "height": int(obj["h"])
-            # }
-
             screen = QGuiApplication.primaryScreen()
             dpr = screen.devicePixelRatio()
 
@@ -99,7 +92,8 @@ class ObjectFinder:
 }
 
         current_screen = self.capture_screen(rect=rect)
-        print(f"Object_finder::find_object() - Screenshot taken for object {object_name} rect: {current_screen.shape}")
+        print(f"Object_finder::find_object() - Screenshot taken for object {object_name} \
+                rect: {rect}  current screen shape: {current_screen.shape}")
 
         # ✅ Convert to grayscale (IMPORTANT)
         current_screen_gray = cv2.cvtColor(current_screen, cv2.COLOR_BGR2GRAY)
@@ -122,9 +116,13 @@ class ObjectFinder:
 
         h, w = template.shape[:2]
 
-        center_x = max_loc[0] + w // 2
-        center_y = max_loc[1] + h // 2
+        # center_x = max_loc[0] + w // 2
+        # center_y = max_loc[1] + h // 2
+        center_x = rect["left"] + rect["width"] // 2 if rect else max_loc[0] + w // 2
+        center_y = rect["top"] + rect["height"] // 2 if rect else max_loc[1] + h // 2   
 
+        print(f"Object_finder::find_object() - center X : {center_x}  center Y: {center_y}")
+ 
         return (center_x, center_y)
 
     # -------------------------------------------------
