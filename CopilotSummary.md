@@ -316,7 +316,7 @@ Prevent manual typing errors.
 Extend ActionPlayer:
 
 ```text
-Click Object
+Click Object                                - DONE      
 Validate Object
 Wait For Object
 ```
@@ -333,15 +333,15 @@ Wait For Object
 
 ## 5️⃣ Advanced Vision (Future)
 
-* Region-based search (use saved x,y,w,h)
+* Region-based search (use saved x,y,w,h)    - DONE
 * Multi-match handling
 * Adaptive confidence
      👉 Fix “object not found” issue
 
 ---
 ## 6️⃣ Workflow Features
-Step reorder (UI buttons)
-Duplicate step
+Step reorder (UI buttons)          - DONE
+Duplicate step                     - DONE
 Enable/Disable step
 
 ---
@@ -401,27 +401,8 @@ Continue Python UI Automation Tool
 
 Next requirement:
 Workflow System
-- Action Model (`action.py`)
-	```python
-	Action(
-		action_type="click",
-		target="FileMenu",
-		x=520,
-		y=410
-	)
-	```
-- Workflow Manager (`workflow_manager.py`)
-	* add_action
-	* delete_action
-	* move_up / move_down
-	* get_actions
 
-- Build Step Editor Dialog with:
-	- Action type selection
-	- Object dropdown (from repository)
-	- Coordinate input
-	- Text input
-	- Save/Edit step
+
 ```
 
 
