@@ -61,3 +61,30 @@ A **Python-based No-Code Desktop UI Automation Tool** that enables **non-technic
 ## 🧠 One-Line Positioning
 
 > **“Lightweight, open-source RPA tool with smart visual automation — simpler than enterprise tools, but far more powerful than macro recorders.”**
+====================================================================================================================
+Smart No-Code Automation Tool
+A Python-based No-Code Desktop UI Automation Tool that enables non-technical users to record, capture UI elements, build, and execute workflows using mouse, keyboard and visual object detection.
+
+
+Key Points
+Simple User Interface and easy to build and execute workflows with No-Code
+Hybrid Step creation and execution options
+Manual Step Creation using Tool UI
+Record and Replay using Mouse and Key board
+Visual Object-Based Step Creation: Capture UI elements once → reuse across workflows
+Smart Visual detection with region-based image matching, retry, timeout, fallback
+
+
+Core Features
+Build workflow steps and save as json
+Record mouse & keyboard actions and Stop hotkey
+Capture UI elements via inbuilt snipping tool and reuse UI objects
+Manual Workflow step management (add, edit, duplicate, delete, reorder etc.)
+Execute Workflow steps (click, wait, validate etc.) and generate report as json
+Replay mouse and keyboard and stop hotkey
+Visual detection and execution of UI elements
+
+Future Scope
+OCR-based validation (OCR sample logic tested, integration in to tool pending)
+Import/export workflows
+Cross-platform support (Not tested in Linux)
